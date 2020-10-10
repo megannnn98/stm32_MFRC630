@@ -16,8 +16,8 @@
 
 #include <stdint.h>
 
-#ifndef __ADAFRUIT_MFRC630_CONSTS_H__
-#define __ADAFRUIT_MFRC630_CONSTS_H__
+#ifndef __mfrc630_CONSTS_H__
+#define __mfrc630_CONSTS_H__
 
 extern uint8_t antcfg_iso14443a_106[18];
 extern uint8_t antcfg_iso14443a_212[18];

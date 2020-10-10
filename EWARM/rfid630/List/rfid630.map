@@ -1,12 +1,12 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.30.1.114/W32 for ARM                  10/Oct/2020  21:17:26
+# IAR ELF Linker V8.30.1.114/W32 for ARM                  10/Oct/2020  22:33:49
 # Copyright 2007-2018 IAR Systems AB.
 #
 #    Output file  =  C:\Users\b\Desktop\rfid630\EWARM\rfid630\Exe\rfid630.out
 #    Map file     =  C:\Users\b\Desktop\rfid630\EWARM\rfid630\List\rfid630.map
 #    Command line =  
-#        -f C:\Users\b\AppData\Local\Temp\EWC07.tmp
+#        -f C:\Users\b\AppData\Local\Temp\EWF794.tmp
 #        (C:\Users\b\Desktop\rfid630\EWARM\rfid630\Obj\Adafruit_MFRC630.o
 #        C:\Users\b\Desktop\rfid630\EWARM\rfid630\Obj\Adafruit_MFRC630_consts.o
 #        C:\Users\b\Desktop\rfid630\EWARM\rfid630\Obj\gpio.o
@@ -83,55 +83,47 @@ initialize by copy { rw };
   .intvec            ro code   0x800'0000    0xb4  startup_stm32f030x8.o [1]
                              - 0x800'00b4    0xb4
 
-"P1":                                      0x1ada
-  .text              ro code   0x800'00b4   0x904  Adafruit_MFRC630.o [1]
-  .text              ro code   0x800'09b8   0x22c  stm32f0xx_hal_gpio.o [1]
-  .text              ro code   0x800'0be4    0x2c  stm32f0xx_hal.o [1]
-  .text              ro code   0x800'0c10    0xe0  I32DivModFast.o [3]
-  .text              ro code   0x800'0cf0     0xc  stm32f0xx_hal.o [1]
-  .text              ro code   0x800'0cfc     0x2  IntDivZer.o [3]
-  .rodata            const     0x800'0cfe     0x2  Adafruit_MFRC630.o [1]
-  .text              ro code   0x800'0d00   0x69c  stm32f0xx_hal_rcc.o [1]
-  .text              ro code   0x800'139c    0x50  stm32f0xx_hal.o [1]
-  .text              ro code   0x800'13ec    0x34  ABImemcpy.o [3]
-  .text              ro code   0x800'1420    0xf4  stm32f0xx_hal_cortex.o [1]
-  .text              ro code   0x800'1514   0x138  main.o [1]
-  .text              ro code   0x800'164c    0x32  ABImemset.o [3]
-  .text              ro code   0x800'167e     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1680    0x20  stm32f0xx_hal.o [1]
-  .text              ro code   0x800'16a0    0x80  gpio.o [1]
-  .text              ro code   0x800'1720   0x100  spi.o [1]
-  .text              ro code   0x800'1820    0x34  stm32f0xx_hal_msp.o [1]
-  .text              ro code   0x800'1854   0x134  stm32f0xx_ll_gpio.o [1]
-  .text              ro code   0x800'1988    0x84  stm32f0xx_ll_spi.o [1]
-  .text              ro code   0x800'1a0c    0x30  copy_init3.o [3]
-  .text              ro code   0x800'1a3c    0x28  data_init.o [3]
-  Initializer bytes  const     0x800'1a64    0x24  <for P2-1>
-  .iar.init_table    const     0x800'1a88    0x14  - Linker created -
-  .text              ro code   0x800'1a9c     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1aa0    0x1e  cmain.o [3]
-  .text              ro code   0x800'1abe     0x4  low_level_init.o [2]
-  .text              ro code   0x800'1ac2     0x8  exit.o [2]
-  .text              ro code   0x800'1aca     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1acc     0xa  cexit.o [3]
-  .text              ro code   0x800'1ad6     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1ad8    0x14  exit.o [4]
-  .text              ro code   0x800'1aec    0x18  stm32f0xx_hal.o [1]
-  .text              ro code   0x800'1b04    0x12  stm32f0xx_it.o [1]
-  .text              ro code   0x800'1b16     0x2  startup_stm32f030x8.o [1]
-  .rodata            const     0x800'1b18    0x10  stm32f0xx_hal_rcc.o [1]
+"P1":                                      0x1aea
+  .text              ro code   0x800'00b4   0x914  Adafruit_MFRC630.o [1]
+  .text              ro code   0x800'09c8   0x22c  stm32f0xx_hal_gpio.o [1]
+  .text              ro code   0x800'0bf4    0x2c  stm32f0xx_hal.o [1]
+  .text              ro code   0x800'0c20    0xe0  I32DivModFast.o [3]
+  .text              ro code   0x800'0d00     0xc  stm32f0xx_hal.o [1]
+  .text              ro code   0x800'0d0c     0x2  IntDivZer.o [3]
+  .rodata            const     0x800'0d0e     0x2  Adafruit_MFRC630.o [1]
+  .text              ro code   0x800'0d10   0x69c  stm32f0xx_hal_rcc.o [1]
+  .text              ro code   0x800'13ac    0x50  stm32f0xx_hal.o [1]
+  .text              ro code   0x800'13fc    0x34  ABImemcpy.o [3]
+  .text              ro code   0x800'1430    0xf4  stm32f0xx_hal_cortex.o [1]
+  .text              ro code   0x800'1524   0x138  main.o [1]
+  .text              ro code   0x800'165c    0x32  ABImemset.o [3]
+  .text              ro code   0x800'168e     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1690    0x20  stm32f0xx_hal.o [1]
+  .text              ro code   0x800'16b0    0x80  gpio.o [1]
+  .text              ro code   0x800'1730   0x100  spi.o [1]
+  .text              ro code   0x800'1830    0x34  stm32f0xx_hal_msp.o [1]
+  .text              ro code   0x800'1864   0x134  stm32f0xx_ll_gpio.o [1]
+  .text              ro code   0x800'1998    0x84  stm32f0xx_ll_spi.o [1]
+  .text              ro code   0x800'1a1c    0x30  copy_init3.o [3]
+  .text              ro code   0x800'1a4c    0x28  data_init.o [3]
+  Initializer bytes  const     0x800'1a74    0x24  <for P2-1>
+  .iar.init_table    const     0x800'1a98    0x14  - Linker created -
+  .text              ro code   0x800'1aac     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1ab0    0x1e  cmain.o [3]
+  .text              ro code   0x800'1ace     0x4  low_level_init.o [2]
+  .text              ro code   0x800'1ad2     0x8  exit.o [2]
+  .text              ro code   0x800'1ada     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1adc     0xa  cexit.o [3]
+  .text              ro code   0x800'1ae6     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1ae8    0x14  exit.o [4]
+  .text              ro code   0x800'1afc    0x18  stm32f0xx_hal.o [1]
+  .text              ro code   0x800'1b14    0x12  stm32f0xx_it.o [1]
+  .text              ro code   0x800'1b26     0x2  startup_stm32f030x8.o [1]
   .rodata            const     0x800'1b28    0x10  stm32f0xx_hal_rcc.o [1]
-  .rodata            const     0x800'1b38    0x10  system_stm32f0xx.o [1]
-  .text              ro code   0x800'1b48    0x10  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b58     0xc  cstartup_M.o [3]
-  .text              ro code   0x800'1b64     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b66     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b68     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b6a     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b6c     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b6e     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b70     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b72     0x2  startup_stm32f030x8.o [1]
+  .rodata            const     0x800'1b38    0x10  stm32f0xx_hal_rcc.o [1]
+  .rodata            const     0x800'1b48    0x10  system_stm32f0xx.o [1]
+  .text              ro code   0x800'1b58    0x10  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b68     0xc  cstartup_M.o [3]
   .text              ro code   0x800'1b74     0x2  startup_stm32f030x8.o [1]
   .text              ro code   0x800'1b76     0x2  startup_stm32f030x8.o [1]
   .text              ro code   0x800'1b78     0x2  startup_stm32f030x8.o [1]
@@ -144,9 +136,17 @@ initialize by copy { rw };
   .text              ro code   0x800'1b86     0x2  startup_stm32f030x8.o [1]
   .text              ro code   0x800'1b88     0x2  startup_stm32f030x8.o [1]
   .text              ro code   0x800'1b8a     0x2  startup_stm32f030x8.o [1]
-  .text              ro code   0x800'1b8c     0x2  system_stm32f0xx.o [1]
-  .rodata            const     0x800'1b8e     0x0  copy_init3.o [3]
-                             - 0x800'1b8e  0x1ada
+  .text              ro code   0x800'1b8c     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b8e     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b90     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b92     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b94     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b96     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b98     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b9a     0x2  startup_stm32f030x8.o [1]
+  .text              ro code   0x800'1b9c     0x2  system_stm32f0xx.o [1]
+  .rodata            const     0x800'1b9e     0x0  copy_init3.o [3]
+                             - 0x800'1b9e  0x1aea
 
 "P2", part 1 of 2:                           0x24
   P2-1                        0x2000'0000    0x21  <Init block>
@@ -166,7 +166,7 @@ Unused ranges:
 
          From           To    Size
          ----           --    ----
-   0x800'1b8e   0x800'ffff  0xe472
+   0x800'1b9e   0x800'ffff  0xe462
   0x2000'0024  0x2000'0027     0x4
   0x2000'1028  0x2000'1fff   0xfd8
 
@@ -179,7 +179,7 @@ Unused ranges:
           -------      ----
 Copy (__iar_copy_init3)
     1 source range, total size 0x24 (109% of destination):
-           0x800'1a64  0x24
+           0x800'1a74  0x24
     1 destination range, total size 0x21:
           0x2000'0000  0x21
 
@@ -196,7 +196,7 @@ command line/config:
     Total:
 
 C:\Users\b\Desktop\rfid630\EWARM\rfid630\Obj: [1]
-    Adafruit_MFRC630.o           2 308        2
+    Adafruit_MFRC630.o           2 324        2
     Adafruit_MFRC630_consts.o                20       20
     gpio.o                         128
     main.o                         312
@@ -212,7 +212,7 @@ C:\Users\b\Desktop\rfid630\EWARM\rfid630\Obj: [1]
     stm32f0xx_ll_spi.o             132
     system_stm32f0xx.o               2       20        4
     ----------------------------------------------------
-    Total:                       6 446       83       33
+    Total:                       6 462       83       33
 
 dl6M_tln.a: [2]
     exit.o                           8
@@ -241,7 +241,7 @@ shb_l.a: [4]
     Gaps                             2
     Linker created                           23    4 096
 --------------------------------------------------------
-    Grand Total:                 6 948      106    4 129
+    Grand Total:                 6 964      106    4 129
 
 
 *******************************************************************************
@@ -250,128 +250,114 @@ shb_l.a: [4]
 
 Entry                       Address   Size  Type      Object
 -----                       -------   ----  ----      ------
-.iar.init_table$$Base    0x800'1a88          --   Gb  - Linker created -
-.iar.init_table$$Limit   0x800'1a9c          --   Gb  - Linker created -
-?main                    0x800'1aa1         Code  Gb  cmain.o [3]
-AHBPrescTable            0x800'1b38   0x10  Data  Gb  system_stm32f0xx.o [1]
-Adafruit_MFRC630_Adafruit_MFRC630_printError
-                         0x800'02f3    0x2  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_begin   0x800'01a7   0x2e  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_clearFIFO
-                         0x800'028b   0x18  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_configRadio
-                         0x800'02f5   0x3e  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_iso14443aCommand
-                         0x800'034f   0xfc  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_iso14443aRequest
-                         0x800'0345    0xa  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_iso14443aSelect
-                         0x800'044b  0x4a4  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_ntagReadPage
-                         0x800'08ef   0xc0  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_printError
-                         0x800'09b7    0x2  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_printHex
-                         0x800'09b5    0x2  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_read8   0x800'015f   0x48  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_readFIFO
-                         0x800'020d   0x40  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_readFIFOLen
-                         0x800'01d5   0x38  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_softReset
-                         0x800'02e3   0x10  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_write8
-                         0x800'00ff   0x24  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_writeBuffer
-                         0x800'0123   0x3c  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_writeCommand
-                         0x800'02a3   0x14  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_writeCommand_param
-                         0x800'02b7   0x2c  Code  Gb  Adafruit_MFRC630.o [1]
-Adafruit_MFRC630_writeFIFO
-                         0x800'024d   0x3e  Code  Gb  Adafruit_MFRC630.o [1]
+.iar.init_table$$Base    0x800'1a98          --   Gb  - Linker created -
+.iar.init_table$$Limit   0x800'1aac          --   Gb  - Linker created -
+?main                    0x800'1ab1         Code  Gb  cmain.o [3]
+AHBPrescTable            0x800'1b48   0x10  Data  Gb  system_stm32f0xx.o [1]
 CSTACK$$Base            0x2000'0028          --   Gb  - Linker created -
 CSTACK$$Limit           0x2000'1028          --   Gb  - Linker created -
-Error_Handler            0x800'164b    0x2  Code  Gb  main.o [1]
-HAL_Delay                0x800'0be5   0x2c  Code  Wk  stm32f0xx_hal.o [1]
-HAL_GPIO_Init            0x800'09b9  0x1ec  Code  Gb  stm32f0xx_hal_gpio.o [1]
-HAL_GPIO_WritePin        0x800'0ba5   0x1a  Code  Gb  stm32f0xx_hal_gpio.o [1]
-HAL_GetTick              0x800'0cf1    0xc  Code  Wk  stm32f0xx_hal.o [1]
-HAL_IncTick              0x800'1aed   0x18  Code  Wk  stm32f0xx_hal.o [1]
-HAL_Init                 0x800'1681   0x1a  Code  Gb  stm32f0xx_hal.o [1]
-HAL_InitTick             0x800'139d   0x50  Code  Wk  stm32f0xx_hal.o [1]
-HAL_MspInit              0x800'1821   0x34  Code  Gb  stm32f0xx_hal_msp.o [1]
-HAL_NVIC_SetPriority     0x800'14df   0x14  Code  Gb  stm32f0xx_hal_cortex.o [1]
-HAL_RCC_ClockConfig      0x800'11c1  0x128  Code  Gb  stm32f0xx_hal_rcc.o [1]
+Error_Handler            0x800'165b    0x2  Code  Gb  main.o [1]
+HAL_Delay                0x800'0bf5   0x2c  Code  Wk  stm32f0xx_hal.o [1]
+HAL_GPIO_Init            0x800'09c9  0x1ec  Code  Gb  stm32f0xx_hal_gpio.o [1]
+HAL_GPIO_WritePin        0x800'0bb5   0x1a  Code  Gb  stm32f0xx_hal_gpio.o [1]
+HAL_GetTick              0x800'0d01    0xc  Code  Wk  stm32f0xx_hal.o [1]
+HAL_IncTick              0x800'1afd   0x18  Code  Wk  stm32f0xx_hal.o [1]
+HAL_Init                 0x800'1691   0x1a  Code  Gb  stm32f0xx_hal.o [1]
+HAL_InitTick             0x800'13ad   0x50  Code  Wk  stm32f0xx_hal.o [1]
+HAL_MspInit              0x800'1831   0x34  Code  Gb  stm32f0xx_hal_msp.o [1]
+HAL_NVIC_SetPriority     0x800'14ef   0x14  Code  Gb  stm32f0xx_hal_cortex.o [1]
+HAL_RCC_ClockConfig      0x800'11d1  0x128  Code  Gb  stm32f0xx_hal_rcc.o [1]
 HAL_RCC_GetSysClockFreq
-                         0x800'12fd   0x72  Code  Gb  stm32f0xx_hal_rcc.o [1]
-HAL_RCC_OscConfig        0x800'0d01  0x4ac  Code  Gb  stm32f0xx_hal_rcc.o [1]
-HAL_SYSTICK_Config       0x800'14f3    0xc  Code  Gb  stm32f0xx_hal_cortex.o [1]
-HardFault_Handler        0x800'1b07    0x4  Code  Gb  stm32f0xx_it.o [1]
+                         0x800'130d   0x72  Code  Gb  stm32f0xx_hal_rcc.o [1]
+HAL_RCC_OscConfig        0x800'0d11  0x4ac  Code  Gb  stm32f0xx_hal_rcc.o [1]
+HAL_SYSTICK_Config       0x800'1503    0xc  Code  Gb  stm32f0xx_hal_cortex.o [1]
+HardFault_Handler        0x800'1b17    0x4  Code  Gb  stm32f0xx_it.o [1]
 LL_AHB1_GRP1_EnableClock
-                         0x800'1737   0x16  Code  Lc  spi.o [1]
+                         0x800'1747   0x16  Code  Lc  spi.o [1]
 LL_APB1_GRP2_EnableClock
-                         0x800'174d   0x16  Code  Lc  spi.o [1]
-LL_GPIO_Init             0x800'190f   0x7a  Code  Gb  stm32f0xx_ll_gpio.o [1]
-LL_GPIO_SetAFPin_0_7     0x800'18bb   0x24  Code  Lc  stm32f0xx_ll_gpio.o [1]
-LL_GPIO_SetAFPin_8_15    0x800'18df   0x30  Code  Lc  stm32f0xx_ll_gpio.o [1]
-LL_GPIO_SetPinMode       0x800'1855   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
+                         0x800'175d   0x16  Code  Lc  spi.o [1]
+LL_GPIO_Init             0x800'191f   0x7a  Code  Gb  stm32f0xx_ll_gpio.o [1]
+LL_GPIO_SetAFPin_0_7     0x800'18cb   0x24  Code  Lc  stm32f0xx_ll_gpio.o [1]
+LL_GPIO_SetAFPin_8_15    0x800'18ef   0x30  Code  Lc  stm32f0xx_ll_gpio.o [1]
+LL_GPIO_SetPinMode       0x800'1865   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
 LL_GPIO_SetPinOutputType
-                         0x800'1871   0x12  Code  Lc  stm32f0xx_ll_gpio.o [1]
-LL_GPIO_SetPinPull       0x800'189f   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
-LL_GPIO_SetPinSpeed      0x800'1883   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
+                         0x800'1881   0x12  Code  Lc  stm32f0xx_ll_gpio.o [1]
+LL_GPIO_SetPinPull       0x800'18af   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
+LL_GPIO_SetPinSpeed      0x800'1893   0x1c  Code  Lc  stm32f0xx_ll_gpio.o [1]
 LL_SPI_EnableNSSPulseMgt
-                         0x800'172d    0xa  Code  Lc  spi.o [1]
-LL_SPI_Init              0x800'199d   0x68  Code  Gb  stm32f0xx_ll_spi.o [1]
-LL_SPI_IsEnabled         0x800'1989    0xc  Code  Lc  stm32f0xx_ll_spi.o [1]
+                         0x800'173d    0xa  Code  Lc  spi.o [1]
+LL_SPI_Init              0x800'19ad   0x68  Code  Gb  stm32f0xx_ll_spi.o [1]
+LL_SPI_IsEnabled         0x800'1999    0xc  Code  Lc  stm32f0xx_ll_spi.o [1]
 LL_SPI_ReceiveData8      0x800'00b5    0x6  Code  Lc  Adafruit_MFRC630.o [1]
 LL_SPI_SetCRCPolynomial
-                         0x800'1995    0x8  Code  Lc  stm32f0xx_ll_spi.o [1]
-LL_SPI_SetStandard       0x800'1721    0xc  Code  Lc  spi.o [1]
+                         0x800'19a5    0x8  Code  Lc  stm32f0xx_ll_spi.o [1]
+LL_SPI_SetStandard       0x800'1731    0xc  Code  Lc  spi.o [1]
 LL_SPI_TransmitData8     0x800'00bb    0x4  Code  Lc  Adafruit_MFRC630.o [1]
-MX_GPIO_Init             0x800'16a1   0x80  Code  Gb  gpio.o [1]
-MX_SPI1_Init             0x800'1763   0xb0  Code  Gb  spi.o [1]
-NMI_Handler              0x800'1b05    0x2  Code  Gb  stm32f0xx_it.o [1]
-PendSV_Handler           0x800'1b0d    0x2  Code  Gb  stm32f0xx_it.o [1]
-Region$$Table$$Base      0x800'1a88          --   Gb  - Linker created -
-Region$$Table$$Limit     0x800'1a9c          --   Gb  - Linker created -
-SVC_Handler              0x800'1b0b    0x2  Code  Gb  stm32f0xx_it.o [1]
-SysTick_Config           0x800'14ad   0x32  Code  Lc  stm32f0xx_hal_cortex.o [1]
-SysTick_Handler          0x800'1b0f    0x8  Code  Gb  stm32f0xx_it.o [1]
-SystemClock_Config       0x800'15f1   0x5a  Code  Gb  main.o [1]
+MX_GPIO_Init             0x800'16b1   0x80  Code  Gb  gpio.o [1]
+MX_SPI1_Init             0x800'1773   0xb0  Code  Gb  spi.o [1]
+NMI_Handler              0x800'1b15    0x2  Code  Gb  stm32f0xx_it.o [1]
+PendSV_Handler           0x800'1b1d    0x2  Code  Gb  stm32f0xx_it.o [1]
+Region$$Table$$Base      0x800'1a98          --   Gb  - Linker created -
+Region$$Table$$Limit     0x800'1aac          --   Gb  - Linker created -
+SVC_Handler              0x800'1b1b    0x2  Code  Gb  stm32f0xx_it.o [1]
+SysTick_Config           0x800'14bd   0x32  Code  Lc  stm32f0xx_hal_cortex.o [1]
+SysTick_Handler          0x800'1b1f    0x8  Code  Gb  stm32f0xx_it.o [1]
+SystemClock_Config       0x800'1601   0x5a  Code  Gb  main.o [1]
 SystemCoreClock         0x2000'0018    0x4  Data  Gb  system_stm32f0xx.o [1]
-SystemInit               0x800'1b8d    0x2  Code  Gb  system_stm32f0xx.o [1]
+SystemInit               0x800'1b9d    0x2  Code  Gb  system_stm32f0xx.o [1]
 __ICFEDIT_region_RAM_end__ {Abs}
                         0x2000'1fff         Data  Gb  <internal module>
 __ICFEDIT_region_RAM_start__ {Abs}
                         0x2000'0000         Data  Gb  <internal module>
-__NVIC_SetPriority       0x800'1421   0x8c  Code  Lc  stm32f0xx_hal_cortex.o [1]
-__aeabi_idiv             0x800'0c3d         Code  Gb  I32DivModFast.o [3]
-__aeabi_idiv0            0x800'0cfd         Code  Gb  IntDivZer.o [3]
-__aeabi_idivmod          0x800'0c3d         Code  Gb  I32DivModFast.o [3]
-__aeabi_memclr4          0x800'164d         Code  Gb  ABImemset.o [3]
-__aeabi_memclr8          0x800'164d         Code  Gb  ABImemset.o [3]
-__aeabi_memcpy4          0x800'13ed         Code  Wk  ABImemcpy.o [3]
-__aeabi_uidiv            0x800'0c43         Code  Gb  I32DivModFast.o [3]
-__aeabi_uidivmod         0x800'0c43         Code  Gb  I32DivModFast.o [3]
-__cmain                  0x800'1aa1         Code  Gb  cmain.o [3]
-__exit                   0x800'1ad9   0x14  Code  Gb  exit.o [4]
-__iar_Memset4_word       0x800'1651         Code  Gb  ABImemset.o [3]
-__iar_copy_init3         0x800'1a0d   0x30  Code  Gb  copy_init3.o [3]
-__iar_data_init3         0x800'1a3d   0x28  Code  Gb  data_init.o [3]
-__iar_program_start      0x800'1b59         Code  Gb  cstartup_M.o [3]
-__low_level_init         0x800'1abf    0x4  Code  Gb  low_level_init.o [2]
+__NVIC_SetPriority       0x800'1431   0x8c  Code  Lc  stm32f0xx_hal_cortex.o [1]
+__aeabi_idiv             0x800'0c4d         Code  Gb  I32DivModFast.o [3]
+__aeabi_idiv0            0x800'0d0d         Code  Gb  IntDivZer.o [3]
+__aeabi_idivmod          0x800'0c4d         Code  Gb  I32DivModFast.o [3]
+__aeabi_memclr4          0x800'165d         Code  Gb  ABImemset.o [3]
+__aeabi_memclr8          0x800'165d         Code  Gb  ABImemset.o [3]
+__aeabi_memcpy4          0x800'13fd         Code  Wk  ABImemcpy.o [3]
+__aeabi_uidiv            0x800'0c53         Code  Gb  I32DivModFast.o [3]
+__aeabi_uidivmod         0x800'0c53         Code  Gb  I32DivModFast.o [3]
+__cmain                  0x800'1ab1         Code  Gb  cmain.o [3]
+__exit                   0x800'1ae9   0x14  Code  Gb  exit.o [4]
+__iar_Memset4_word       0x800'1661         Code  Gb  ABImemset.o [3]
+__iar_copy_init3         0x800'1a1d   0x30  Code  Gb  copy_init3.o [3]
+__iar_data_init3         0x800'1a4d   0x28  Code  Gb  data_init.o [3]
+__iar_program_start      0x800'1b69         Code  Gb  cstartup_M.o [3]
+__low_level_init         0x800'1acf    0x4  Code  Gb  low_level_init.o [2]
 __vector_table           0x800'0000         Data  Gb  startup_stm32f030x8.o [1]
-_call_main               0x800'1aad         Code  Gb  cmain.o [3]
-_exit                    0x800'1acd         Code  Gb  cexit.o [3]
-_main                    0x800'1abb         Code  Gb  cmain.o [3]
+_call_main               0x800'1abd         Code  Gb  cmain.o [3]
+_exit                    0x800'1add         Code  Gb  cexit.o [3]
+_main                    0x800'1acb         Code  Gb  cmain.o [3]
 antcfg_iso14443a_106    0x2000'0000   0x14  Data  Gb  Adafruit_MFRC630_consts.o [1]
 digitalWrite             0x800'00bf   0x20  Code  Gb  Adafruit_MFRC630.o [1]
-exit                     0x800'1ac3    0x8  Code  Gb  exit.o [2]
-main                     0x800'15b7   0x3a  Code  Gb  main.o [1]
-print_buf_hex            0x800'1515   0x12  Code  Lc  main.o [1]
+exit                     0x800'1ad3    0x8  Code  Gb  exit.o [2]
+main                     0x800'15c7   0x3a  Code  Gb  main.o [1]
+mfrc630_begin            0x800'01a7   0x2e  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_clearFIFO        0x800'028b   0x18  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_configRadio      0x800'0307   0x3e  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_iso14443aCommand
+                         0x800'0363   0xfc  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_iso14443aRequest
+                         0x800'0359    0xa  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_iso14443aSelect
+                         0x800'045f  0x4a4  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_ntagReadPage     0x800'0903   0xc0  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_printError       0x800'0305    0x2  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_printHex         0x800'02f3   0x12  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_read8            0x800'015f   0x48  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_readFIFO         0x800'020d   0x40  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_readFIFOLen      0x800'01d5   0x38  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_softReset        0x800'02e3   0x10  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_write8           0x800'00ff   0x24  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_writeBuffer      0x800'0123   0x3c  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_writeCommand     0x800'02a3   0x14  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_writeCommand_param
+                         0x800'02b7   0x2c  Code  Gb  Adafruit_MFRC630.o [1]
+mfrc630_writeFIFO        0x800'024d   0x3e  Code  Gb  Adafruit_MFRC630.o [1]
+print_buf_hex            0x800'1525   0x12  Code  Lc  main.o [1]
 radio_ntag156b_dump_minimal
-                         0x800'1527   0x90  Code  Gb  main.o [1]
+                         0x800'1537   0x90  Code  Gb  main.o [1]
 spi_exchange             0x800'00df   0x20  Code  Gb  Adafruit_MFRC630.o [1]
 uwTick                  0x2000'001c    0x4  Data  Gb  stm32f0xx_hal.o [1]
 uwTickFreq              0x2000'0020    0x1  Data  Gb  stm32f0xx_hal.o [1]
@@ -383,7 +369,7 @@ uwTickPrio              0x2000'0014    0x4  Data  Gb  stm32f0xx_hal.o [1]
 [3] = rt6M_tl.a
 [4] = shb_l.a
 
-  6 948 bytes of readonly  code memory
+  6 964 bytes of readonly  code memory
     106 bytes of readonly  data memory
   4 129 bytes of readwrite data memory
 

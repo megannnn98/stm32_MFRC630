@@ -1,8 +1,8 @@
 /*!
- * @file Adafruit_MFRC630.h
+ * @file MFRC630.h
  */
-#ifndef __ADAFRUIT_MFRC630_H__
-#define __ADAFRUIT_MFRC630_H__
+#ifndef __mfrc630_H__
+#define __mfrc630_H__
 
 #include "Adafruit_MFRC630_consts.h"
 #include "Adafruit_MFRC630_regs.h"
@@ -15,23 +15,23 @@
 /*!
  * @brief MFRC630 I2C Address
  */
-#define MFRC630_I2C_ADDR (0x28)
+#define mfrc630_I2C_ADDR (0x28)
 
 /* Debug output level */
 /*
  * NOTE: Setting this macro above RELEASE may require more SRAM than small
  *       MCUs like the Atmel 32u4 can provide!
  */
-#define MFRC630_VERBOSITY_RELEASE (0) //!< No debug output
-#define MFRC630_VERBOSITY_DEBUG (1)   //!< Debug message output
-#define MFRC630_VERBOSITY_TRACE (2)   //!< Full packet trace dumps
-#define MFRC630_VERBOSITY                                                      \
-  (MFRC630_VERBOSITY_RELEASE) //!< Sets verbosity variable
+#define mfrc630_VERBOSITY_RELEASE (0) //!< No debug output
+#define mfrc630_VERBOSITY_DEBUG (1)   //!< Debug message output
+#define mfrc630_VERBOSITY_TRACE (2)   //!< Full packet trace dumps
+#define mfrc630_VERBOSITY                                                      \
+  (mfrc630_VERBOSITY_RELEASE) //!< Sets verbosity variable
 
-#define MFRC630_ALWAYS_DISP_ERRORS (1) //!< Sets error output
+#define mfrc630_ALWAYS_DISP_ERRORS (1) //!< Sets error output
 
 /* Macro for debug output */
-#if MFRC630_VERBOSITY >= MFRC630_VERBOSITY_DEBUG
+#if MFRC630_VERBOSITY >= mfrc630_VERBOSITY_DEBUG
 #define DEBUG_PRINT(...) PRINT(__VA_ARGS__)
 #define DEBUG_PRINTLN(...) PRINTln(__VA_ARGS__)
 #define DEBUG_TIMESTAMP()                                                      \
@@ -43,7 +43,7 @@
 #endif
 
 /* Macro for trace output */
-#if MFRC630_VERBOSITY >= MFRC630_VERBOSITY_TRACE
+#if MFRC630_VERBOSITY >= mfrc630_VERBOSITY_TRACE
 #define TRACE_PRINT(...) PRINT(__VA_ARGS__)
 #define TRACE_PRINTLN(...) PRINTln(__VA_ARGS__)
 #define TRACE_TIMESTAMP()                                                      \
@@ -81,14 +81,14 @@
    * @note This instance of the constructor requires the 'transport'
    *       parameter to distinguish is from the default I2C version.
    */
-  void Adafruit_MFRC630(void);
+  void MFRC630(void);
 
   /**
    * Initialises the IC and performs some simple system checks.
    *
    * @return True if init succeeded, otherwise false.
    */
-  bool Adafruit_MFRC630_begin(void);
+  bool mfrc630_begin(void);
 
   /* FIFO helpers (see section 7.5) */
   /**
@@ -96,7 +96,7 @@
    *
    * @return The number of bytes in the FIFO buffer.
    */
-  int16_t Adafruit_MFRC630_readFIFOLen(void);
+  int16_t mfrc630_readFIFOLen(void);
 
   /**
    * Reads data from the FIFO buffer.
@@ -106,7 +106,7 @@
    *
    * @return The actual number of bytes read from the FIFO buffer.
    */
-  int16_t Adafruit_MFRC630_readFIFO(uint16_t len, uint8_t *buffer);
+  int16_t mfrc630_readFIFO(uint16_t len, uint8_t *buffer);
 
   /**
    * Write sdata into the FIFO buffer.
@@ -116,12 +116,12 @@
    *
    * @return The actual number of bytes written.
    */
-  int16_t Adafruit_MFRC630_writeFIFO(uint16_t len, uint8_t *buffer);
+  int16_t mfrc630_writeFIFO(uint16_t len, uint8_t *buffer);
 
   /**
    * Clears the contents of the FIFO buffer.
    */
-  void Adafruit_MFRC630_clearFIFO(void);
+  void mfrc630_clearFIFO(void);
 
   /* Command wrappers */
   /**
@@ -129,7 +129,7 @@
    *
    * @param command   The command register to send.
    */
-  void Adafruit_MFRC630_writeCommand(uint8_t command);
+  void mfrc630_writeCommand(uint8_t command);
 
   /**
    * Sends a parametrized command to the IC.
@@ -138,7 +138,7 @@
    * @param paramlen  The number of parameter bytes.
    * @param params    The paramater values to send.
    */
-  void Adafruit_MFRC630_writeCommand_param(uint8_t command, uint8_t paramlen, uint8_t *params);
+  void mfrc630_writeCommand_param(uint8_t command, uint8_t paramlen, uint8_t *params);
 
   /* Radio config. */
   /**
@@ -148,7 +148,7 @@
    *
    * @return True if succeeded, otherwise false.
    */
-  bool Adafruit_MFRC630_configRadio(mfrc630radiocfg cfg);
+  bool mfrc630_configRadio(mfrc630radiocfg cfg);
 
   /* General helpers */
   /**
@@ -156,12 +156,12 @@
    *
    * @return The 8-bit state ID.
    */
-  uint8_t Adafruit_MFRC630_getComStatus(void);
+  uint8_t mfrc630_getComStatus(void);
 
   /**
    * Performs a soft-reset to put the IC into a known state.
    */
-  void Adafruit_MFRC630_softReset(void);
+  void mfrc630_softReset(void);
 
   /* Generic ISO14443a commands (common to any supported card variety). */
   /**
@@ -169,14 +169,14 @@
    *
    * @return The ATQA value if a card was detected.
    */
-  uint16_t Adafruit_MFRC630_iso14443aRequest(void);
+  uint16_t mfrc630_iso14443aRequest(void);
 
   /**
    * Sends the WUPA wakeup command.
    *
    * @return The ATQA value if a card was detected.
    */
-  uint16_t Adafruit_MFRC630_iso14443aWakeup(void);
+  uint16_t mfrc630_iso14443aWakeup(void);
 
   /**
    * Selects a detected ISO14443A card, retrieving the UID and SAK.
@@ -186,7 +186,7 @@
    *
    * @return True if init succeeded, otherwise false.
    */
-  uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak);
+  uint8_t mfrc630_iso14443aSelect(uint8_t *uid, uint8_t *sak);
 
   /* Mifare commands. */
   /**
@@ -194,7 +194,7 @@
    *
    * @param key   Pointer to the buffer containing the key values.
    */
-  void Adafruit_MFRC630_mifareLoadKey(uint8_t *key);
+  void mfrc630_mifareLoadKey(uint8_t *key);
 
   /**
    * Authenticates the selected card using the previously supplied key/
@@ -205,7 +205,7 @@
    *
    * @return True if init succeeded, otherwise false.
    */
-  bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum, uint8_t *uid);
+  bool mfrc630_mifareAuth(uint8_t key_type, uint8_t blocknum, uint8_t *uid);
 
   /**
    * Reads the contents of the specified (and previously authenticated)
@@ -216,7 +216,7 @@
    *
    * @return The number of bytes read.
    */
-  uint16_t Adafruit_MFRC630_mifareReadBlock(uint8_t blocknum, uint8_t *buf);
+  uint16_t mfrc630_mifareReadBlock(uint8_t blocknum, uint8_t *buf);
 
   /**
    * Writes the supplied data to the previously authenticated
@@ -227,7 +227,7 @@
    *
    * @return The number of bytes written.
    */
-  uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf);
+  uint16_t mfrc630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf);
 
 
   /* NTAG commands */
@@ -239,7 +239,7 @@
    *
    * @return The number of bytes read.
    */
-  uint16_t Adafruit_MFRC630_ntagReadPage(uint16_t pagenum, uint8_t *buf);
+  uint16_t mfrc630_ntagReadPage(uint16_t pagenum, uint8_t *buf);
 
   /**
    * Writes the supplied content of the specified page.
@@ -249,15 +249,15 @@
    *
    * @return The number of bytes written.
    */
-  uint16_t Adafruit_MFRC630_ntagWritePage(uint16_t pagenum, uint8_t *buf);
+  uint16_t mfrc630_ntagWritePage(uint16_t pagenum, uint8_t *buf);
 
-  void Adafruit_MFRC630_write8(uint8_t reg, uint8_t value);
-  void Adafruit_MFRC630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer);
-  uint8_t Adafruit_MFRC630_read8(uint8_t reg);
+  void mfrc630_write8(uint8_t reg, uint8_t value);
+  void mfrc630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer);
+  uint8_t mfrc630_read8(uint8_t reg);
 
-  void Adafruit_MFRC630_printHex(uint8_t *buf, size_t len);
-  void Adafruit_MFRC630_printError(mfrc630errors err);
+  void mfrc630_printHex(uint8_t *buf, size_t len);
+  void mfrc630_printError(mfrc630errors err);
 
-  uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd);
+  uint16_t mfrc630_iso14443aCommand(iso14443_cmd cmd);
 
 #endif

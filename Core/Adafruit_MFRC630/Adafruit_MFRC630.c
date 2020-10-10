@@ -1,5 +1,5 @@
 /*!
- * @file Adafruit_MFRC630.cpp
+ * @file MFRC630.cpp
  *
  * @mainpage Adafruit MFRC630 Library
  *
@@ -73,7 +73,7 @@ uint8_t reverse8(uint8_t n) {
     @brief  Write a uint8_t to the specified register
 */
 /**************************************************************************/
-void Adafruit_MFRC630_write8(uint8_t reg, uint8_t value) {
+void mfrc630_write8(uint8_t reg, uint8_t value) {
   TRACE_TIMESTAMP();
   TRACE_PRINT("Writing 0x");
   TRACE_PRINT(value, HEX);
@@ -93,7 +93,7 @@ void Adafruit_MFRC630_write8(uint8_t reg, uint8_t value) {
     @brief  Write a buffer to the specified register
 */
 /**************************************************************************/
-void Adafruit_MFRC630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer) {
+void mfrc630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer) {
   TRACE_TIMESTAMP();
   TRACE_PRINT("Writing ");
   TRACE_PRINT(len);
@@ -121,7 +121,7 @@ void Adafruit_MFRC630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer) {
     @brief  Read a uint8_t from the specified register
 */
 /**************************************************************************/
-uint8_t Adafruit_MFRC630_read8(uint8_t reg) {
+uint8_t mfrc630_read8(uint8_t reg) {
   uint8_t resp = 0;
   uint8_t tx[2] = {0};
   uint8_t rx[2] = {0};
@@ -158,16 +158,16 @@ uint8_t Adafruit_MFRC630_read8(uint8_t reg) {
 
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new instance of the Adafruit_MFRC630 class
+    @brief  Instantiates a new instance of the MFRC630 class
             using the default I2C bus.
 */
 /**************************************************************************/
 /*!
-    @brief  Instantiates a new instance of the Adafruit_MFRC630 class
+    @brief  Instantiates a new instance of the MFRC630 class
             using the HW SPI bus.
 */
 /**************************************************************************/
-void Adafruit_MFRC630(void) {
+void MFRC630(void) {
 
 }
 
@@ -180,7 +180,7 @@ void Adafruit_MFRC630(void) {
     @brief  Sets up the HW
 */
 /**************************************************************************/
-bool Adafruit_MFRC630_begin() {
+bool mfrc630_begin() {
   /* Display alert for DEBUG and TRACE output. */
   DEBUG_PRINT("\tDebug output enabled: D [+ms] Message\r\n");
   TRACE_PRINTLN("\tTrace output enabled: . [+ms] Message");
@@ -194,7 +194,7 @@ bool Adafruit_MFRC630_begin() {
   DEBUG_PRINT("Checking transport layer\r\n");
 
   /* Read the VERSION register */
-  uint8_t ver = Adafruit_MFRC630_read8(MFRC630_REG_VERSION);
+  uint8_t ver = mfrc630_read8(mfrc630_REG_VERSION);
 
   /* If ver == 0xFF or 0x0 likely a bus failure */
   if ((ver == 0xFF) || (ver == 0)) {
@@ -223,7 +223,7 @@ bool Adafruit_MFRC630_begin() {
     @returns The number of uint8_ts available in the HW FIFO buffer
 */
 /**************************************************************************/
-int16_t Adafruit_MFRC630_readFIFOLen(void) {
+int16_t mfrc630_readFIFOLen(void) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Checking FIFO length\r\n");
 
@@ -231,10 +231,10 @@ int16_t Adafruit_MFRC630_readFIFOLen(void) {
   /* TODO: Why do we need a delay between reads?!? */
   delay(10);
 
-  /* Read the MFRC630_REG_FIFO_LENGTH register */
+  /* Read the mfrc630_REG_FIFO_LENGTH register */
   /* In 512 uint8_t mode, the upper two bits are stored in FIFO_CONTROL */
-  uint8_t hi = Adafruit_MFRC630_read8(MFRC630_REG_FIFO_CONTROL);
-  uint8_t lo = Adafruit_MFRC630_read8(MFRC630_REG_FIFO_LENGTH);
+  uint8_t hi = mfrc630_read8(mfrc630_REG_FIFO_CONTROL);
+  uint8_t lo = mfrc630_read8(mfrc630_REG_FIFO_LENGTH);
 
   /* Determine len based on FIFO size (255 uint8_t or 512 uint8_t mode) */
   int16_t l = (hi & 0x80) ? lo : (((hi & 0x3) << 8) | lo);
@@ -252,7 +252,7 @@ int16_t Adafruit_MFRC630_readFIFOLen(void) {
     @returns The number of uint8_ts read from the FIFO, or -1 if an error occured.
 */
 /**************************************************************************/
-int16_t Adafruit_MFRC630_readFIFO(uint16_t len, uint8_t *buffer) {
+int16_t mfrc630_readFIFO(uint16_t len, uint8_t *buffer) {
   int16_t counter = 0;
 
   /* Check for 512 uint8_t overflow */
@@ -265,7 +265,7 @@ int16_t Adafruit_MFRC630_readFIFO(uint16_t len, uint8_t *buffer) {
 
   /* Read len uint8_ts from the FIFO */
   for (uint16_t i = 0; i < len; i++) {
-    buffer[i] = Adafruit_MFRC630_read8(MFRC630_REG_FIFO_DATA);
+    buffer[i] = mfrc630_read8(mfrc630_REG_FIFO_DATA);
     counter++;
   }
 
@@ -279,7 +279,7 @@ int16_t Adafruit_MFRC630_readFIFO(uint16_t len, uint8_t *buffer) {
     @returns The number of uint8_ts written to the FIFO, -1 if an error occured.
 */
 /**************************************************************************/
-int16_t Adafruit_MFRC630_writeFIFO(uint16_t len, uint8_t *buffer) {
+int16_t mfrc630_writeFIFO(uint16_t len, uint8_t *buffer) {
   int counter = 0;
 
   /* Check for 512 uint8_t overflow */
@@ -292,7 +292,7 @@ int16_t Adafruit_MFRC630_writeFIFO(uint16_t len, uint8_t *buffer) {
 
   /* Write len uint8_ts to the FIFO */
   for (uint16_t i = 0; i < len; i++) {
-    Adafruit_MFRC630_write8(MFRC630_REG_FIFO_DATA, buffer[i]);
+    mfrc630_write8(mfrc630_REG_FIFO_DATA, buffer[i]);
     counter++;
   }
 
@@ -304,12 +304,12 @@ int16_t Adafruit_MFRC630_writeFIFO(uint16_t len, uint8_t *buffer) {
     @brief  Flushes the contents of the FIFo buffer
 */
 /**************************************************************************/
-void Adafruit_MFRC630_clearFIFO(void) {
+void mfrc630_clearFIFO(void) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Clearing FIFO buffer \r\n");
 
-  uint8_t ctrl = Adafruit_MFRC630_read8(MFRC630_REG_FIFO_CONTROL);
-  Adafruit_MFRC630_write8(MFRC630_REG_FIFO_CONTROL, ctrl | (1 << 4));
+  uint8_t ctrl = mfrc630_read8(mfrc630_REG_FIFO_CONTROL);
+  mfrc630_write8(mfrc630_REG_FIFO_CONTROL, ctrl | (1 << 4));
 }
 
 /**************************************************************************/
@@ -317,13 +317,13 @@ void Adafruit_MFRC630_clearFIFO(void) {
     @brief  Writes a parameter-less command to the internal state machine
 */
 /**************************************************************************/
-void Adafruit_MFRC630_writeCommand(uint8_t command) {
+void mfrc630_writeCommand(uint8_t command) {
   uint8_t buff[1] = {command};
 
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Sending CMD 0x%02x\r\n", command);
 
-  Adafruit_MFRC630_writeBuffer(MFRC630_REG_COMMAND, 1, buff);
+  mfrc630_writeBuffer(mfrc630_REG_COMMAND, 1, buff);
 }
 
 /**************************************************************************/
@@ -331,7 +331,7 @@ void Adafruit_MFRC630_writeCommand(uint8_t command) {
     @brief  Writes a parameterised command to the internal state machine
 */
 /**************************************************************************/
-void Adafruit_MFRC630_writeCommand_param(uint8_t command, uint8_t paramlen,
+void mfrc630_writeCommand_param(uint8_t command, uint8_t paramlen,
                                     uint8_t *params) {
   /* Arguments and/or data necessary to process a command are exchanged via
      the FIFO buffer:
@@ -349,16 +349,16 @@ void Adafruit_MFRC630_writeCommand_param(uint8_t command, uint8_t paramlen,
   DEBUG_PRINT("Sending Command\r\n");
 
   /* Cancel any current command. */
-  Adafruit_MFRC630_write8(MFRC630_REG_COMMAND, MFRC630_CMD_IDLE);
+  mfrc630_write8(mfrc630_REG_COMMAND, mfrc630_CMD_IDLE);
 
   /* Flush the FIFO */
-  Adafruit_MFRC630_clearFIFO();
+  mfrc630_clearFIFO();
 
   /* Write data to the FIFO */
-  Adafruit_MFRC630_writeFIFO(paramlen, params);
+  mfrc630_writeFIFO(paramlen, params);
 
   /* Send the command */
-  Adafruit_MFRC630_write8(MFRC630_REG_COMMAND, command);
+  mfrc630_write8(mfrc630_REG_COMMAND, command);
 }
 
 /**************************************************************************/
@@ -366,8 +366,8 @@ void Adafruit_MFRC630_writeCommand_param(uint8_t command, uint8_t paramlen,
     @brief  Gets the three bit COM status for the IC
 */
 /**************************************************************************/
-uint8_t Adafruit_MFRC630_getComStatus(void) {
-  return (Adafruit_MFRC630_read8(MFRC630_REG_STATUS) & 7);
+uint8_t mfrc630_getComStatus(void) {
+  return (mfrc630_read8(mfrc630_REG_STATUS) & 7);
 }
 
 /**************************************************************************/
@@ -375,8 +375,8 @@ uint8_t Adafruit_MFRC630_getComStatus(void) {
     @brief  Performs a soft reset of the IC
 */
 /**************************************************************************/
-void Adafruit_MFRC630_softReset(void) {
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_SOFTRESET);
+void mfrc630_softReset(void) {
+  mfrc630_writeCommand(mfrc630_CMD_SOFTRESET);
   delay(100);
 }
 
@@ -385,7 +385,7 @@ void Adafruit_MFRC630_softReset(void) {
     @brief  Prints out n uint8_ts of hex data.
 */
 /**************************************************************************/
-void Adafruit_MFRC630_printHex(uint8_t *buf, size_t len) {
+void mfrc630_printHex(uint8_t *buf, size_t len) {
   if (len) {
     DEBUG_PRINT("[ ");
   }
@@ -402,33 +402,33 @@ void Adafruit_MFRC630_printHex(uint8_t *buf, size_t len) {
     @brief  Prints a human readable error code.
 */
 /**************************************************************************/
-void Adafruit_MFRC630_printError(mfrc630errors err) {
+void mfrc630_printError(mfrc630errors err) {
 //  ERROR_TIMESTAMP();
 //  ERROR_PRINT("ERROR! Danger, Will Robinson: ");
 //
 //  switch (err) {
-//  case MFRC630_ERROR_INTEG:
+//  case mfrc630_ERROR_INTEG:
 //    ERROR_PRINTLN("Data integrity!");
 //    break;
-//  case MFRC630_ERROR_PROT:
+//  case mfrc630_ERROR_PROT:
 //    ERROR_PRINTLN("Protocol error!");
 //    break;
-//  case MFRC630_ERROR_COLLDET:
+//  case mfrc630_ERROR_COLLDET:
 //    ERROR_PRINTLN("Collision detected!");
 //    break;
-//  case MFRC630_ERROR_NODATA:
+//  case mfrc630_ERROR_NODATA:
 //    ERROR_PRINTLN("No data!");
 //    break;
-//  case MFRC630_ERROR_MINFRAME:
+//  case mfrc630_ERROR_MINFRAME:
 //    ERROR_PRINTLN("Frame data too small!");
 //    break;
-//  case MFRC630_ERROR_FIFOOVL:
+//  case mfrc630_ERROR_FIFOOVL:
 //    ERROR_PRINTLN("FIFO full!");
 //    break;
-//  case MFRC630_ERROR_FIFOWR:
+//  case mfrc630_ERROR_FIFOWR:
 //    ERROR_PRINTLN("Couldn't write to FIFO!");
 //    break;
-//  case MFRC630_ERROR_EEPROM:
+//  case mfrc630_ERROR_EEPROM:
 //    ERROR_PRINTLN("EEPROM access!");
 //    break;
 //  default:
@@ -438,7 +438,7 @@ void Adafruit_MFRC630_printError(mfrc630errors err) {
 //  }
 //
 //  /* Halt execution here if we're not in release mode! */
-//#if MFRC630_VERBOSITY > MFRC630_VERBOSITY_RELEASE
+//#if mfrc630_VERBOSITY > mfrc630_VERBOSITY_RELEASE
 //  while (1) {
 //    delay(1);
 //  }
@@ -450,31 +450,31 @@ void Adafruit_MFRC630_printError(mfrc630errors err) {
     @brief  Configures the radio for the specified protocol
 */
 /**************************************************************************/
-bool Adafruit_MFRC630_configRadio(mfrc630radiocfg cfg) {
+bool mfrc630_configRadio(mfrc630radiocfg cfg) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Configuring the radio for ");
 
   switch (cfg) {
-  case MFRC630_RADIOCFG_ISO1443A_106:
+  case mfrc630_RADIOCFG_ISO1443A_106:
     DEBUG_PRINT("ISO1443A-106\r\n");
-    Adafruit_MFRC630_writeCommand_param(MFRC630_REG_DRV_MOD, sizeof(antcfg_iso14443a_106),
+    mfrc630_writeCommand_param(mfrc630_REG_DRV_MOD, sizeof(antcfg_iso14443a_106),
                 antcfg_iso14443a_106);
 
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Setting driver mode\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_DRV_MOD, 0x8E); /* Driver mode register */
+    mfrc630_write8(mfrc630_REG_DRV_MOD, 0x8E); /* Driver mode register */
 
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Setting transmitter amplifier (residual carrier %)\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_TX_AMP, 0x12); /* Transmiter amplifier register */
+    mfrc630_write8(mfrc630_REG_TX_AMP, 0x12); /* Transmiter amplifier register */
 
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Setting driver configuration\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_DRV_CON, 0x39); /* Driver configuration register */
+    mfrc630_write8(mfrc630_REG_DRV_CON, 0x39); /* Driver configuration register */
 
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Configuring transmitter (overshoot/TX load)\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_TXL, 0x06); /* Transmitter register */
+    mfrc630_write8(mfrc630_REG_TXL, 0x06); /* Transmitter register */
     break;
   default:
     DEBUG_PRINT("[UNKNOWN!]\r\n");
@@ -485,68 +485,68 @@ bool Adafruit_MFRC630_configRadio(mfrc630radiocfg cfg) {
   return true;
 }
 
-uint16_t Adafruit_MFRC630_iso14443aRequest(void) {
-  return Adafruit_MFRC630_iso14443aCommand(ISO14443_CMD_REQA);
+uint16_t mfrc630_iso14443aRequest(void) {
+  return mfrc630_iso14443aCommand(ISO14443_CMD_REQA);
 }
 
-uint16_t Adafruit_MFRC630_iso14443aWakeup(void) {
-  return Adafruit_MFRC630_iso14443aCommand(ISO14443_CMD_WUPA);
+uint16_t mfrc630_iso14443aWakeup(void) {
+  return mfrc630_iso14443aCommand(ISO14443_CMD_WUPA);
 }
 
-uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd) {
+uint16_t mfrc630_iso14443aCommand(iso14443_cmd cmd) {
   uint16_t atqa = 0; /* Answer to request (2 uint8_ts). */
 
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Checking for an ISO14443A tag\r\n");
 
   /* Cancel any current command */
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Flush the FIFO */
-  Adafruit_MFRC630_clearFIFO();
+  mfrc630_clearFIFO();
 
   /*
    * Define the number of bits from the last uint8_t should be sent. 000 means
    * that all bits of the last data uint8_t are sent, 1..7 causes the specified
    * number of bits to be sent. Also set the DataEn bit to enable data xfer.
    */
-  Adafruit_MFRC630_write8(MFRC630_REG_TX_DATA_NUM, 0x07 | (1 << 3));
+  mfrc630_write8(mfrc630_REG_TX_DATA_NUM, 0x07 | (1 << 3));
 
   /* Disable CRC. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("A. Disabling CRC checks.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18);
-  Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18);
+  mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18);
+  mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18);
 
   /* Clear the receiver control register. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("B. Clearing the receiver control register.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_RX_BIT_CTRL, 0);
+  mfrc630_write8(mfrc630_REG_RX_BIT_CTRL, 0);
 
   /* Clear the interrupts. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("C. Clearing and configuring interrupts.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
   /* Allow the receiver and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_RXIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_RXIRQ | MFRC630IRQ0_ERRIRQ);
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (5ms max). */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("D. Configuring Timer0 @ 211.875kHz, post TX, 5ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 1100 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 1100 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11);
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 1100 >> 8);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 1100 >> 8);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Send the ISO14443 command. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("E. Sending ISO14443 command.\r\n");
   uint8_t send_req[] = {(uint8_t)cmd};
-  Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, 1, send_req);
+  mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, 1, send_req);
 
   /* Wait here until we're done reading, get an error, or timeout. */
   /* TODO: Update to use timeout parameter! */
@@ -554,7 +554,7 @@ uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd) {
   DEBUG_PRINT("F. Waiting for a response or timeout.\r\n");
   uint8_t irqval = 0;
   while (!(irqval & MFRC630IRQ1_TIMER0IRQ)) {
-    irqval = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irqval = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irqval & MFRC630IRQ1_GLOBALIRQ) {
       break;
@@ -562,26 +562,26 @@ uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd) {
   }
 
   /* Cancel the current command (in case we timed out or error occurred). */
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Check the RX IRQ, and exit appropriately if it has fired (error). */
-  irqval = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
+  irqval = mfrc630_read8(mfrc630_REG_IRQ0);
   if ((!(irqval & MFRC630IRQ0_RXIRQ) || (irqval & MFRC630IRQ0_ERRIRQ))) {
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("ERROR: No RX flag set, transceive failed or timed out.\r\n");
     /* Display the error message if ERROR IRQ is set. */
     if (irqval && MFRC630IRQ0_ERRIRQ) {
-      uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
+      uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
       /* Only display the error if it isn't a timeout. */
       if (error) {
-        Adafruit_MFRC630_printError((mfrc630errors)error);
+        mfrc630_printError((mfrc630errors)error);
       }
     }
     return 0;
   }
 
   /* Read the response */
-  uint16_t rxlen = Adafruit_MFRC630_readFIFOLen();
+  uint16_t rxlen = mfrc630_readFIFOLen();
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("G. Reading response from FIFO buffer.\r\n");
   if (rxlen == 2) {
@@ -596,7 +596,7 @@ uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd) {
      * 0x44 = 4 bit frame anticollision
      *        UID size = double
      */
-    Adafruit_MFRC630_readFIFO(rxlen, (uint8_t *)&atqa);
+    mfrc630_readFIFO(rxlen, (uint8_t *)&atqa);
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Received response (ATQA): 0x%02x\r\n", atqa);
     return atqa;
@@ -610,31 +610,31 @@ uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd) {
  * "Chip Type Identification Procedure" in
  * https://www.nxp.com/docs/en/application-note/AN10833.pdf
  */
-uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
+uint8_t mfrc630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Selecting an ISO14443A tag\r\n");
 
   /* Cancel any current command */
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Flush the FIFO */
-  Adafruit_MFRC630_clearFIFO();
+  mfrc630_clearFIFO();
 
   /* Allow the receiver and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_RXIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_RXIRQ | MFRC630IRQ0_ERRIRQ);
 
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (5ms max). */
   /* 1 'tick' 4.72us, so 1100 = 5.2ms */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("A. Configuring Timer0 @ 211.875kHz, post TX, 5ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 1100 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 1100 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11);
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 1100 >> 8);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 1100 >> 8);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Set the cascade level (collision detection loop) */
   DEBUG_TIMESTAMP();
@@ -665,8 +665,8 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
     /* Disable CRC. */
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("a. Disabling CRC checks.\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18);
-    Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18);
+    mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18);
+    mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18);
 
     /* As per ISO14443-3, limit coliision checks to 32 attempts. */
     uint8_t cnum;
@@ -675,25 +675,25 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
     for (cnum = 0; cnum < 32; cnum++) {
       DEBUG_TIMESTAMP();
       DEBUG_PRINT("Attempt = %d, known bits = %d ", cnum, kbits);
-      Adafruit_MFRC630_printHex(uid_this_level, (kbits + 8 - 1) / 8);
+      mfrc630_printHex(uid_this_level, (kbits + 8 - 1) / 8);
       DEBUG_PRINT("\r\n");
 
       /* Clear the interrupts. */
-      Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-      Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+      mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+      mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
       /* Send the current collision level command */
       send_req[0] = cmd;
       send_req[1] = 0x20 + kbits;
 
-      /* Limit MFRC630_REG_TX_DATA_NUM to the correct number of bits. */
-      Adafruit_MFRC630_write8(MFRC630_REG_TX_DATA_NUM, (kbits % 8) | (1 << 3));
+      /* Limit mfrc630_REG_TX_DATA_NUM to the correct number of bits. */
+      mfrc630_write8(mfrc630_REG_TX_DATA_NUM, (kbits % 8) | (1 << 3));
 
       // ValuesAfterColl: If cleared, every received bit after a collision is
       // replaced by a zero. This function is needed for ISO/IEC14443
       // anticollision (0<<7). We want to shift the bits with RxAlign
       uint8_t rxalign = kbits % 8;
-      Adafruit_MFRC630_write8(MFRC630_REG_RX_BIT_CTRL, (0 << 7) | (rxalign << 4));
+      mfrc630_write8(mfrc630_REG_RX_BIT_CTRL, (0 << 7) | (rxalign << 4));
 
       /* Determine the message length */
       if ((kbits % 8) == 0) {
@@ -703,12 +703,12 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
       }
 
       /* Send the command. */
-      Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, message_length, send_req);
+      mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, message_length, send_req);
 
       /* Wait until the command execution is complete. */
       uint8_t irq1_value = 0;
       while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-        irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+        irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
         /* Check for a global interrrupt, which can only be ERR or RX. */
         if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
           break;
@@ -716,19 +716,19 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
       }
 
       /* Cancel any current command */
-      Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+      mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
       /* Parse results */
-      uint8_t irq0_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
-      uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
-      uint8_t coll = Adafruit_MFRC630_read8(MFRC630_REG_RX_COLL);
+      uint8_t irq0_value = mfrc630_read8(mfrc630_REG_IRQ0);
+      uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
+      uint8_t coll = mfrc630_read8(mfrc630_REG_RX_COLL);
       uint8_t coll_p = 0;
 
       /* Check if an error occured */
       if (irq0_value & MFRC630IRQ0_ERRIRQ) {
         /* Display the error code in human-readable format. */
-        Adafruit_MFRC630_printError((mfrc630errors)error);
-        if (error & MFRC630_ERROR_COLLDET) {
+        mfrc630_printError((mfrc630errors)error);
+        if (error & mfrc630_ERROR_COLLDET) {
           /* Collision error, check if the collision position is valid */
           if (coll & (1 << 7)) {
             /* Valid, so check the collision position (bottom 7 bits). */
@@ -747,7 +747,7 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
 
             DEBUG_TIMESTAMP();
             DEBUG_PRINT("'uid_this_level' is now %d: ", kbits);
-            Adafruit_MFRC630_printHex(uid_this_level, 10);
+            mfrc630_printHex(uid_this_level, 10);
             DEBUG_PRINT("\r\n");
           } else {
             /* Invalid collision position (bit 7 = 0) */
@@ -759,7 +759,7 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
           DEBUG_TIMESTAMP();
           DEBUG_PRINT("Unhandled error.\r\n");
           coll_p = 0x20 - kbits;
-        } /* End: if (error & MFRC630_ERROR_COLLDET) */
+        } /* End: if (error & mfrc630_ERROR_COLLDET) */
       } else if (irq0_value & MFRC630IRQ0_RXIRQ) {
         /* We have data and no collision, all is well in the world! */
         coll_p = 0x20 - kbits;
@@ -773,9 +773,9 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
       } /* End: if (irq0_value & (1 << 1)) */
 
       /* Read the UID so far */
-      uint16_t rxlen = Adafruit_MFRC630_readFIFOLen();
+      uint16_t rxlen = mfrc630_readFIFOLen();
       uint8_t buf[5]; /* UID = 4 uint8_ts + BCC */
-      Adafruit_MFRC630_readFIFO(rxlen < 5 ? rxlen : 5, buf);
+      mfrc630_readFIFO(rxlen < 5 ? rxlen : 5, buf);
 
       /*
        * Move current buffer contents into the UID placeholder, OR'ing the
@@ -791,7 +791,7 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
         DEBUG_TIMESTAMP();
         DEBUG_PRINT("Leaving collision loop: uid %d bits long", kbits);
         DEBUG_TIMESTAMP();
-        Adafruit_MFRC630_printHex(uid_this_level, kbits / 8);
+        mfrc630_printHex(uid_this_level, kbits / 8);
         DEBUG_PRINT("\r\n");
         break; /* Exit the collision loop */
       }
@@ -811,8 +811,8 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
     /* Clear the interrupts. */
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("D. Clearing and configuring interrupts.\r\n");
-    Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-    Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+    mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+    mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
     send_req[0] = cmd;
     send_req[1] = 0x70;
@@ -820,41 +820,41 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
     message_length = 7;
 
     /* Re-enable CRCs. */
-    Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18 | 1);
-    Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18 | 1);
+    mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18 | 1);
+    mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18 | 1);
 
     /* Reset the TX and RX registers (disable alignment, transmit full uint8_ts) */
-    Adafruit_MFRC630_write8(MFRC630_REG_TX_DATA_NUM, (kbits % 8) | (1 << 3));
+    mfrc630_write8(mfrc630_REG_TX_DATA_NUM, (kbits % 8) | (1 << 3));
     uint8_t rxalign = 0;
-    Adafruit_MFRC630_write8(MFRC630_REG_RX_BIT_CTRL, (0 << 7) | (rxalign << 4));
+    mfrc630_write8(mfrc630_REG_RX_BIT_CTRL, (0 << 7) | (rxalign << 4));
 
     /* Send the command. */
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("E. Sending collision command\r\n");
-    Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, message_length, send_req);
+    mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, message_length, send_req);
 
     /* Wait until the command execution is complete. */
     uint8_t irq1_value = 0;
     while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-      irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+      irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
       /* Check for a global interrrupt, which can only be ERR or RX. */
       if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
         break;
       }
     }
-    Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+    mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
     /* Check the source of exiting the loop. */
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("F. Command complete, verifying proper exit.\r\n");
-    uint8_t irq0_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
+    uint8_t irq0_value = mfrc630_read8(mfrc630_REG_IRQ0);
     /* Check the ERROR IRQ */
     if (irq0_value & MFRC630IRQ0_ERRIRQ) {
       /* Check what kind of error. */
-      uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
-      if (error & MFRC630_ERROR_COLLDET) {
+      uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
+      if (error & mfrc630_ERROR_COLLDET) {
         /* Collision detecttion. */
-        Adafruit_MFRC630_printError(MFRC630_ERROR_COLLDET);
+        mfrc630_printError(mfrc630_ERROR_COLLDET);
         return 0;
       }
     }
@@ -862,14 +862,14 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
     /* Read SAK answer from fifo. */
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("G. Checking SAK in response payload.\r\n");
-    uint8_t sak_len = Adafruit_MFRC630_readFIFOLen();
+    uint8_t sak_len = mfrc630_readFIFOLen();
     if (sak_len != 1) {
       DEBUG_TIMESTAMP();
       DEBUG_PRINT("ERROR: NO SAK in response!\r\n");
       return 0;
     }
     uint8_t sak_value;
-    Adafruit_MFRC630_readFIFO(sak_len, &sak_value);
+    mfrc630_readFIFO(sak_len, &sak_value);
 
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("SAK answer: %d\r\n", sak_value);
@@ -908,46 +908,46 @@ uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak) {
   return 0;
 }
 
-void Adafruit_MFRC630_mifareLoadKey(uint8_t *key) {
+void mfrc630_mifareLoadKey(uint8_t *key) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Loading Mifare key into crypto unit.\r\n");
 
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
-  Adafruit_MFRC630_clearFIFO();
-  Adafruit_MFRC630_writeFIFO(6, key);
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_LOADKEY);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
+  mfrc630_clearFIFO();
+  mfrc630_writeFIFO(6, key);
+  mfrc630_writeCommand(mfrc630_CMD_LOADKEY);
 }
 
-bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum,
+bool mfrc630_mifareAuth(uint8_t key_type, uint8_t blocknum,
                                   uint8_t *uid) {
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Authenticating Mifare block %d\r\n", blocknum);
 
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
-  Adafruit_MFRC630_clearFIFO();
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
+  mfrc630_clearFIFO();
 
   /* Allow the IDLE and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (10ms max). */
   /* 1 'tick' 4.72us, so 2000 = ~10ms */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Configuring Timer0 @ 211.875kHz, post TX, 10ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 2000 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 2000 >> 8);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11);
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 2000 >> 8);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 2000 >> 8);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Clear interrupts. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
   /* Start of AUTH procedure. */
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
-  Adafruit_MFRC630_clearFIFO();
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
+  mfrc630_clearFIFO();
 
   /*
    * MFAUTHENT command has the following parameters:
@@ -961,8 +961,8 @@ bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum,
    * NOTE: When the MFAuthent command is active, any FIFO access is blocked!
    */
   uint8_t params[6] = {key_type, blocknum, uid[0], uid[1], uid[2], uid[3]};
-  Adafruit_MFRC630_writeFIFO(6, params);
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_MFAUTHENT);
+  mfrc630_writeFIFO(6, params);
+  mfrc630_writeCommand(mfrc630_CMD_MFAUTHENT);
 
   /*
    * This command terminates automatically when the MIFARE Classic card is
@@ -983,7 +983,7 @@ bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum,
   /* Wait until the command execution is complete. */
   uint8_t irq1_value = 0;
   while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-    irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
       break;
@@ -991,19 +991,19 @@ bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum,
   }
 
 #if 0
-  uint8_t irq0_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
-  uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
-  uint8_t status = Adafruit_MFRC630_read8(MFRC630_REG_STATUS);
+  uint8_t irq0_value = mfrc630_read8(mfrc630_REG_IRQ0);
+  uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
+  uint8_t status = mfrc630_read8(mfrc630_REG_STATUS);
   PRINT("ERROR : 0x%02x", error); 
   PRINT("IRQ0  : 0x%02x", irq0_value);
   PRINT("IRQ1  : 0x%02x", irq1_value);
   PRINT("STATUS: 0x%02x", status);
 #endif
 
-  /* Check the error flag (MFRC630_ERROR_PROT, etc.) */
-  uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
+  /* Check the error flag (mfrc630_ERROR_PROT, etc.) */
+  uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
   if (error) {
-    Adafruit_MFRC630_printError((mfrc630errors)error);
+    mfrc630_printError((mfrc630errors)error);
     return false;
   }
 
@@ -1014,52 +1014,52 @@ bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum,
   }
 
   /* Check the status register for CRYPTO1 flag (Mifare AUTH). */
-  uint8_t status = Adafruit_MFRC630_read8(MFRC630_REG_STATUS);
+  uint8_t status = mfrc630_read8(mfrc630_REG_STATUS);
   return (status & MFRC630STATUS_CRYPTO1ON) ? true : false;
 }
 
-uint16_t Adafruit_MFRC630_mifareReadBlock(uint8_t blocknum, uint8_t *buf) {
-  Adafruit_MFRC630_clearFIFO();
+uint16_t mfrc630_mifareReadBlock(uint8_t blocknum, uint8_t *buf) {
+  mfrc630_clearFIFO();
 
   /* Enable CRC. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("A. Disabling CRC checks.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18 | 1);
-  Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18 | 1);
+  mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18 | 1);
+  mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18 | 1);
 
   /* Allow the IDLE and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (10ms max). */
   /* 1 'tick' 4.72us, so 2000 = ~10ms */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Configuring Timer0 @ 211.875kHz, post TX, 10ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Clear interrupts. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
   /* Transceive the command. */
   uint8_t req[2] = {MIFARE_CMD_READ, blocknum};
-  Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, 2, req);
+  mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, 2, req);
 
   /* Wait until the command execution is complete. */
   uint8_t irq1_value = 0;
   while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-    irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
       break;
     }
   }
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Check if we timed out or got a response. */
   if (irq1_value & MFRC630IRQ1_TIMER0IRQ) {
@@ -1069,55 +1069,55 @@ uint16_t Adafruit_MFRC630_mifareReadBlock(uint8_t blocknum, uint8_t *buf) {
   }
 
   /* Read the size and contents of the FIFO, and return the results. */
-  uint16_t buffer_length = Adafruit_MFRC630_readFIFOLen();
+  uint16_t buffer_length = mfrc630_readFIFOLen();
   uint16_t rx_len = (buffer_length <= 16) ? buffer_length : 16;
-  Adafruit_MFRC630_readFIFO(rx_len, buf);
+  mfrc630_readFIFO(rx_len, buf);
 
   return rx_len;
 }
 
-uint16_t Adafruit_MFRC630_ntagReadPage(uint16_t pagenum, uint8_t *buf) {
-  Adafruit_MFRC630_clearFIFO();
+uint16_t mfrc630_ntagReadPage(uint16_t pagenum, uint8_t *buf) {
+  mfrc630_clearFIFO();
 
   /* Enable CRC. */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("A. Disabling CRC checks.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18 | 1);
-  Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18 | 1);
+  mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18 | 1);
+  mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18 | 1);
 
   /* Allow the IDLE and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (10ms max). */
   /* 1 'tick' 4.72us, so 2000 = ~10ms */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Configuring Timer0 @ 211.875kHz, post TX, 10ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Clear interrupts. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
   /* Transceive the command. */
   uint8_t req[2] = {(uint8_t)NTAG_CMD_READ, (uint8_t)pagenum};
-  Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, 2, req);
+  mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, 2, req);
 
   /* Wait until the command execution is complete. */
   uint8_t irq1_value = 0;
   while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-    irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
       break;
     }
   }
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Check if we timed out or got a response. */
   if (irq1_value & MFRC630IRQ1_TIMER0IRQ) {
@@ -1127,15 +1127,15 @@ uint16_t Adafruit_MFRC630_ntagReadPage(uint16_t pagenum, uint8_t *buf) {
   }
 
   /* Read the size and contents of the FIFO, and return the results. */
-  uint16_t buffer_length = Adafruit_MFRC630_readFIFOLen();
+  uint16_t buffer_length = mfrc630_readFIFOLen();
   uint16_t rx_len = (buffer_length <= 4) ? buffer_length : 4;
-  Adafruit_MFRC630_readFIFO(rx_len, buf);
+  mfrc630_readFIFO(rx_len, buf);
 
   return rx_len;
 }
 
-uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
-  Adafruit_MFRC630_clearFIFO();
+uint16_t mfrc630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
+  mfrc630_clearFIFO();
 
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Writing data to card @ 0x%02x\r\n", blocknum);
@@ -1143,42 +1143,42 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   /* Enable CRC for TX (RX off!). */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("A. Disabling CRC checks.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_TX_CRC_PRESET, 0x18 | 1);
-  Adafruit_MFRC630_write8(MFRC630_REG_RX_CRC_CON, 0x18 | 0);
+  mfrc630_write8(mfrc630_REG_TX_CRC_PRESET, 0x18 | 1);
+  mfrc630_write8(mfrc630_REG_RX_CRC_CON, 0x18 | 0);
 
   /* Allow the IDLE and Error IRQs to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
+  mfrc630_write8(mfrc630_REG_IRQOEN, MFRC630IRQ0_IDLEIRQ | MFRC630IRQ0_ERRIRQ);
   /* Allow Timer0 IRQ to be propagated to the GlobalIRQ. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
+  mfrc630_write8(mfrc630_REG_IRQ1EN, MFRC630IRQ1_TIMER0IRQ);
 
   /* Configure the frame wait timeout using T0 (10ms max). */
   /* 1 'tick' 4.72us, so 2000 = ~10ms */
   DEBUG_TIMESTAMP();
   DEBUG_PRINT("Configuring Timer0 @ 211.875kHz, post TX, 10ms timeout.\r\n");
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_RELOAD_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_TO_RELOAD_LO, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_HI, 0xFF);
-  Adafruit_MFRC630_write8(MFRC630_REG_T0_COUNTER_VAL_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_CONTROL, 0x11); /* Start at end of TX, 211kHz */
+  mfrc630_write8(mfrc630_REG_T0_RELOAD_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_TO_RELOAD_LO, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_HI, 0xFF);
+  mfrc630_write8(mfrc630_REG_T0_COUNTER_VAL_LO, 0xFF);
 
   /* Clear interrupts. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
   /* Transceive the WRITE command. */
   uint8_t req1[2] = {(uint8_t)MIFARE_CMD_WRITE, (uint8_t)blocknum};
-  Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, sizeof(req1), req1);
+  mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, sizeof(req1), req1);
 
   /* Wait until the command execution is complete. */
   uint8_t irq1_value = 0;
   while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-    irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
       break;
     }
   }
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Check if we timed out or got a response. */
   if (irq1_value & MFRC630IRQ1_TIMER0IRQ) {
@@ -1188,15 +1188,15 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   }
 
   /* Check if an error occured */
-  uint8_t error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
-  uint8_t irq0_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
+  uint8_t error = mfrc630_read8(mfrc630_REG_ERROR);
+  uint8_t irq0_value = mfrc630_read8(mfrc630_REG_IRQ0);
   if (irq0_value & MFRC630IRQ0_ERRIRQ) {
-    Adafruit_MFRC630_printError((mfrc630errors)error);
+    mfrc630_printError((mfrc630errors)error);
     return 0;
   }
 
   /* We should have a single ACK uint8_t in buffer at this point. */
-  uint16_t buffer_length = Adafruit_MFRC630_readFIFOLen();
+  uint16_t buffer_length = mfrc630_readFIFOLen();
   if (buffer_length != 1) {
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Unexpected response buffer len: %d\r\n", buffer_length);
@@ -1204,7 +1204,7 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   }
 
   uint8_t ack = 0;
-  Adafruit_MFRC630_readFIFO(1, &ack);
+  mfrc630_readFIFO(1, &ack);
   if (ack != 0x0A) {
     /* Missing valid ACK response! */
     DEBUG_TIMESTAMP();
@@ -1214,22 +1214,22 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
 
   /* TODO: Verift values! */
   /* Clear the interrupts. */
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ0, 0x7F);
-  Adafruit_MFRC630_write8(MFRC630_REG_IRQ1, 0x3F);
+  mfrc630_write8(mfrc630_REG_IRQ0, 0x7F);
+  mfrc630_write8(mfrc630_REG_IRQ1, 0x3F);
 
   /* Transfer the page data. */
-  Adafruit_MFRC630_writeCommand_param(MFRC630_CMD_TRANSCEIVE, 16, buf);
+  mfrc630_writeCommand_param(mfrc630_CMD_TRANSCEIVE, 16, buf);
 
   /* Wait until the command execution is complete. */
   irq1_value = 0;
   while (!(irq1_value & MFRC630IRQ1_TIMER0IRQ)) {
-    irq1_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ1);
+    irq1_value = mfrc630_read8(mfrc630_REG_IRQ1);
     /* Check for a global interrrupt, which can only be ERR or RX. */
     if (irq1_value & MFRC630IRQ1_GLOBALIRQ) {
       break;
     }
   }
-  Adafruit_MFRC630_writeCommand(MFRC630_CMD_IDLE);
+  mfrc630_writeCommand(mfrc630_CMD_IDLE);
 
   /* Check if we timed out or got a response. */
   if (irq1_value & MFRC630IRQ1_TIMER0IRQ) {
@@ -1239,15 +1239,15 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   }
 
   /* Check if an error occured */
-  error = Adafruit_MFRC630_read8(MFRC630_REG_ERROR);
-  irq0_value = Adafruit_MFRC630_read8(MFRC630_REG_IRQ0);
+  error = mfrc630_read8(mfrc630_REG_ERROR);
+  irq0_value = mfrc630_read8(mfrc630_REG_IRQ0);
   if (irq0_value & MFRC630IRQ0_ERRIRQ) {
-    Adafruit_MFRC630_printError((mfrc630errors)error);
+    mfrc630_printError((mfrc630errors)error);
     return 0;
   }
 
   /* We should have a single ACK uint8_t in buffer at this point. */
-  buffer_length = Adafruit_MFRC630_readFIFOLen();
+  buffer_length = mfrc630_readFIFOLen();
   if (buffer_length != 1) {
     DEBUG_TIMESTAMP();
     DEBUG_PRINT("Unexpected response buffer len: %d\r\n", buffer_length);
@@ -1255,7 +1255,7 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   }
 
   ack = 0;
-  Adafruit_MFRC630_readFIFO(1, &ack);
+  mfrc630_readFIFO(1, &ack);
   if (ack != 0x0A) {
     /* Missing valid ACK response! */
     DEBUG_TIMESTAMP();
@@ -1266,7 +1266,7 @@ uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf) {
   return 16;
 }
 
-uint16_t Adafruit_MFRC630_ntagWritePage(uint16_t pagenum, uint8_t *buf) {
+uint16_t mfrc630_ntagWritePage(uint16_t pagenum, uint8_t *buf) {
   /*
    * For now, protect pages 0..3 and 40..44, and restrict writes to the safe
    * 'user memory' range (see docs/NTAG.md for further details).
@@ -1278,6 +1278,6 @@ uint16_t Adafruit_MFRC630_ntagWritePage(uint16_t pagenum, uint8_t *buf) {
   }
 
   /* Use the Mifare write, which is compatible with the NTAG cards. */
-  return Adafruit_MFRC630_mifareWriteBlock(pagenum, buf) == 16 ? 4 : 0;
+  return mfrc630_mifareWriteBlock(pagenum, buf) == 16 ? 4 : 0;
 }
 
