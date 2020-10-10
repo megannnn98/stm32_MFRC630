@@ -173,7 +173,8 @@ int main(void)
   
   /* Try to initialize the IC */
   if (!(Adafruit_MFRC630_begin())) {
-    // PRINTln("Unable to initialize the MFRC630. Check wiring?");
+    
+    PRINT("Unable to initialize the MFRC630. Check wiring?\r\n");
     while(1) {
 //      digitalWrite(LED_BUILTIN, HIGH);
       HAL_Delay(50);
@@ -186,7 +187,7 @@ int main(void)
    * This will be INCREDIBLY chatty on the I2C bus, but can be used as a
    * quick test to wait until a card enters the near field.
    */
-  // PRINTln("Waiting for an ISO14443-A compatible card ...");
+  PRINT("Waiting for an ISO14443-A compatible card ...\r\n");
   while (!radio_ntag156b_dump_minimal())
   {
     HAL_Delay(50);
