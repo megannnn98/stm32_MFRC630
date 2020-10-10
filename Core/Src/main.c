@@ -83,7 +83,7 @@ bool radio_ntag156b_dump_minimal(void)
     mfrc630_softReset();
 
     /* Configure the radio for ISO14443A-106. */
-    mfrc630_configRadio(mfrc630_RADIOCFG_ISO1443A_106);
+    mfrc630_configRadio(MFRC630_RADIOCFG_ISO1443A_106);
 
     /* Request a tag (activates the near field, etc.). */
     uint16_t atqa = mfrc630_iso14443aRequest();
