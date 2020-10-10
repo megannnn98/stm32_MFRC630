@@ -8,6 +8,7 @@
 #include "Adafruit_MFRC630_regs.h"
 #include "stdint.h"
 #include <SPI.h>
+#include <stdbool.h>
 //#include <Stream.h>
 //#include <Wire.h>
 
@@ -70,9 +71,6 @@
 /**
  * Driver for the Adafruit MFRC630 RFID front-end.
  */
-class Adafruit_MFRC630 {
-public:
-
   /**
    * HW SPI bus constructor
    *
@@ -83,14 +81,14 @@ public:
    * @note This instance of the constructor requires the 'transport'
    *       parameter to distinguish is from the default I2C version.
    */
-  Adafruit_MFRC630();
+  void Adafruit_MFRC630(void);
 
   /**
    * Initialises the IC and performs some simple system checks.
    *
    * @return True if init succeeded, otherwise false.
    */
-  bool begin(void);
+  bool Adafruit_MFRC630_begin(void);
 
   /* FIFO helpers (see section 7.5) */
   /**
@@ -98,7 +96,7 @@ public:
    *
    * @return The number of bytes in the FIFO buffer.
    */
-  int16_t readFIFOLen(void);
+  int16_t Adafruit_MFRC630_readFIFOLen(void);
 
   /**
    * Reads data from the FIFO buffer.
@@ -108,7 +106,7 @@ public:
    *
    * @return The actual number of bytes read from the FIFO buffer.
    */
-  int16_t readFIFO(uint16_t len, uint8_t *buffer);
+  int16_t Adafruit_MFRC630_readFIFO(uint16_t len, uint8_t *buffer);
 
   /**
    * Write sdata into the FIFO buffer.
@@ -118,12 +116,12 @@ public:
    *
    * @return The actual number of bytes written.
    */
-  int16_t writeFIFO(uint16_t len, uint8_t *buffer);
+  int16_t Adafruit_MFRC630_writeFIFO(uint16_t len, uint8_t *buffer);
 
   /**
    * Clears the contents of the FIFO buffer.
    */
-  void clearFIFO(void);
+  void Adafruit_MFRC630_clearFIFO(void);
 
   /* Command wrappers */
   /**
@@ -131,7 +129,7 @@ public:
    *
    * @param command   The command register to send.
    */
-  void writeCommand(uint8_t command);
+  void Adafruit_MFRC630_writeCommand(uint8_t command);
 
   /**
    * Sends a parametrized command to the IC.
@@ -140,7 +138,7 @@ public:
    * @param paramlen  The number of parameter bytes.
    * @param params    The paramater values to send.
    */
-  void writeCommand(uint8_t command, uint8_t paramlen, uint8_t *params);
+  void Adafruit_MFRC630_writeCommand_param(uint8_t command, uint8_t paramlen, uint8_t *params);
 
   /* Radio config. */
   /**
@@ -150,7 +148,7 @@ public:
    *
    * @return True if succeeded, otherwise false.
    */
-  bool configRadio(mfrc630radiocfg cfg);
+  bool Adafruit_MFRC630_configRadio(mfrc630radiocfg cfg);
 
   /* General helpers */
   /**
@@ -158,12 +156,12 @@ public:
    *
    * @return The 8-bit state ID.
    */
-  uint8_t getComStatus(void);
+  uint8_t Adafruit_MFRC630_getComStatus(void);
 
   /**
    * Performs a soft-reset to put the IC into a known state.
    */
-  void softReset(void);
+  void Adafruit_MFRC630_softReset(void);
 
   /* Generic ISO14443a commands (common to any supported card variety). */
   /**
@@ -171,14 +169,14 @@ public:
    *
    * @return The ATQA value if a card was detected.
    */
-  uint16_t iso14443aRequest(void);
+  uint16_t Adafruit_MFRC630_iso14443aRequest(void);
 
   /**
    * Sends the WUPA wakeup command.
    *
    * @return The ATQA value if a card was detected.
    */
-  uint16_t iso14443aWakeup(void);
+  uint16_t Adafruit_MFRC630_iso14443aWakeup(void);
 
   /**
    * Selects a detected ISO14443A card, retrieving the UID and SAK.
@@ -188,7 +186,7 @@ public:
    *
    * @return True if init succeeded, otherwise false.
    */
-  uint8_t iso14443aSelect(uint8_t *uid, uint8_t *sak);
+  uint8_t Adafruit_MFRC630_iso14443aSelect(uint8_t *uid, uint8_t *sak);
 
   /* Mifare commands. */
   /**
@@ -196,7 +194,7 @@ public:
    *
    * @param key   Pointer to the buffer containing the key values.
    */
-  void mifareLoadKey(uint8_t *key);
+  void Adafruit_MFRC630_mifareLoadKey(uint8_t *key);
 
   /**
    * Authenticates the selected card using the previously supplied key/
@@ -207,7 +205,7 @@ public:
    *
    * @return True if init succeeded, otherwise false.
    */
-  bool mifareAuth(uint8_t key_type, uint8_t blocknum, uint8_t *uid);
+  bool Adafruit_MFRC630_mifareAuth(uint8_t key_type, uint8_t blocknum, uint8_t *uid);
 
   /**
    * Reads the contents of the specified (and previously authenticated)
@@ -218,7 +216,7 @@ public:
    *
    * @return The number of bytes read.
    */
-  uint16_t mifareReadBlock(uint8_t blocknum, uint8_t *buf);
+  uint16_t Adafruit_MFRC630_mifareReadBlock(uint8_t blocknum, uint8_t *buf);
 
   /**
    * Writes the supplied data to the previously authenticated
@@ -229,17 +227,8 @@ public:
    *
    * @return The number of bytes written.
    */
-  uint16_t mifareWriteBlock(uint16_t blocknum, uint8_t *buf);
+  uint16_t Adafruit_MFRC630_mifareWriteBlock(uint16_t blocknum, uint8_t *buf);
 
-  /**
-   * The default key for fresh Mifare cards.
-   */
-  uint8_t mifareKeyGlobal[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-
-  /**
-   * The default key for NDEF formatted cards.
-   */
-  uint8_t mifareKeyNDEF[6] = {0xD3, 0xF7, 0xD3, 0xF7, 0xD3, 0xF7};
 
   /* NTAG commands */
   /**
@@ -250,7 +239,7 @@ public:
    *
    * @return The number of bytes read.
    */
-  uint16_t ntagReadPage(uint16_t pagenum, uint8_t *buf);
+  uint16_t Adafruit_MFRC630_ntagReadPage(uint16_t pagenum, uint8_t *buf);
 
   /**
    * Writes the supplied content of the specified page.
@@ -260,18 +249,15 @@ public:
    *
    * @return The number of bytes written.
    */
-  uint16_t ntagWritePage(uint16_t pagenum, uint8_t *buf);
+  uint16_t Adafruit_MFRC630_ntagWritePage(uint16_t pagenum, uint8_t *buf);
 
-private:
+  void Adafruit_MFRC630_write8(uint8_t reg, uint8_t value);
+  void Adafruit_MFRC630_writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer);
+  uint8_t Adafruit_MFRC630_read8(uint8_t reg);
 
-  void write8(uint8_t reg, uint8_t value);
-  void writeBuffer(uint8_t reg, uint16_t len, uint8_t *buffer);
-  uint8_t read8(uint8_t reg);
+  void Adafruit_MFRC630_printHex(uint8_t *buf, size_t len);
+  void Adafruit_MFRC630_printError(mfrc630errors err);
 
-  void printHex(uint8_t *buf, size_t len);
-  void printError(enum mfrc630errors err);
-
-  uint16_t iso14443aCommand(enum iso14443_cmd cmd);
-};
+  uint16_t Adafruit_MFRC630_iso14443aCommand(iso14443_cmd cmd);
 
 #endif

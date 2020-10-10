@@ -58,7 +58,7 @@ void SystemClock_Config(void);
 
 
 /* Use the default I2C address */
-Adafruit_MFRC630 rfid = Adafruit_MFRC630();
+//Adafruit_MFRC630 rfid = Adafruit_MFRC630();
 
 /* Prints out len bytes of hex data in table format. */
 static void print_buf_hex(uint8_t* buf, size_t len)
@@ -80,13 +80,13 @@ bool radio_ntag156b_dump_minimal(void)
     bool rc;
 
     /* Put the IC in a known-state. */
-    rfid.softReset();
+    Adafruit_MFRC630_softReset();
 
     /* Configure the radio for ISO14443A-106. */
-    rfid.configRadio(MFRC630_RADIOCFG_ISO1443A_106);
+    Adafruit_MFRC630_configRadio(MFRC630_RADIOCFG_ISO1443A_106);
 
     /* Request a tag (activates the near field, etc.). */
-    uint16_t atqa = rfid.iso14443aRequest();
+    uint16_t atqa = Adafruit_MFRC630_iso14443aRequest();
 
     /* Looks like we found a tag, move on to selection. */
     if (atqa) {
@@ -97,7 +97,7 @@ bool radio_ntag156b_dump_minimal(void)
             uint8_t sak;
 
             /* Retrieve the UID and SAK values. */
-            uidlen = rfid.iso14443aSelect(uid, &sak);
+            uidlen = Adafruit_MFRC630_iso14443aSelect(uid, &sak);
             PRINT("Found a tag with UUID ");
             for (uint8_t i = 0; i < uidlen; i++) {
                 PRINT("0x%02x ", uid[i]);
@@ -109,7 +109,7 @@ bool radio_ntag156b_dump_minimal(void)
                 for (uint8_t i = 0; i < 42; i++) {
                     /* We should be able to read the page contents now. */
                     uint8_t pagebuf[4] = { 0, 0, 0, 0 };
-                    uint8_t len = rfid.ntagReadPage(i, pagebuf);
+                    uint8_t len = Adafruit_MFRC630_ntagReadPage(i, pagebuf);
                     PRINT("%d: ", i);
                     print_buf_hex(pagebuf, len);
                 }
@@ -172,7 +172,7 @@ int main(void)
   
   
   /* Try to initialize the IC */
-  if (!(rfid.begin())) {
+  if (!(Adafruit_MFRC630_begin())) {
     // PRINTln("Unable to initialize the MFRC630. Check wiring?");
     while(1) {
 //      digitalWrite(LED_BUILTIN, HIGH);

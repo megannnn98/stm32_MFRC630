@@ -7,7 +7,7 @@
 /*!
  * @brief MFRC630 command set
  */
-enum mfrc630reg {
+typedef enum  {
   MFRC630_REG_COMMAND = 0x00,
   MFRC630_REG_HOST_CTRL = 0x01,
   MFRC630_REG_FIFO_CONTROL = 0x02,
@@ -84,10 +84,10 @@ enum mfrc630reg {
   MFRC630_REG_PADIN = 0x46,
   MFRC630_REG_SIGOUT = 0x47,
   MFRC630_REG_VERSION = 0x7F
-};
+} mfrc630reg;
 
 /*! See Table 7.10.2: Command Set */
-enum mfrc630cmd {
+typedef enum  {
   MFRC630_CMD_IDLE = 0x00, /**< Cancels current command */
   MFRC630_CMD_LPCD = 0x01, /**< Low power card detection */
   MFRC630_CMD_LOADKEY =
@@ -116,19 +116,19 @@ enum mfrc630cmd {
   MFRC630_CMD_READRNR = 0x1C, /**< Copies bytes from the random number generator
                                  into the FIFO buffer until the FIFO is full */
   MFRC630_CMD_SOFTRESET = 0x1F /**< SW resets the MFRC630 */
-};
+} mfrc630cmd;
 
 /*! ISO14443 Commands (see ISO-14443-3) */
-enum iso14443_cmd {
+typedef enum  {
   ISO14443_CMD_REQA = 0x26,    /**< Request command. */
   ISO14443_CMD_WUPA = 0x52,    /**< Wakeup command. */
   ISO14443_CAS_LEVEL_1 = 0x93, /**< Anticollision cascade level 1. */
   ISO14443_CAS_LEVEL_2 = 0x95, /**< Anticollision cascade level 2. */
   ISO14443_CAS_LEVEL_3 = 0x97  /**< Anticollision cascade level 3. */
-};
+} iso14443_cmd;
 
 /*! Mifare Commands */
-enum mifare_cmd {
+typedef enum  {
   MIFARE_CMD_AUTH_A = 0x60,
   MIFARE_CMD_AUTH_B = 0x61,
   MIFARE_CMD_READ = 0x30,
@@ -138,33 +138,33 @@ enum mifare_cmd {
   MIFARE_CMD_INCREMENT = 0xC1,
   MIFARE_CMD_STORE = 0xC2,
   MIFARE_ULTRALIGHT_CMD_WRITE = 0xA2
-};
+} mifare_cmd;
 
 /*! NTAG Commands */
-enum ntag_cmd {
+typedef enum  {
   NTAG_CMD_READ = 0x30,      /**> NTAG page read. */
   NTAG_CMD_WRITE = 0xA2,     /**< NTAG-specfiic 4 uint8_t write. */
   NTAG_CMD_COMP_WRITE = 0xA0 /**< Mifare Classic 16-uint8_t compat. write. */
-};
+} ntag_cmd;
 
 /*! 'ComState' values for for the MFRC630_REG_STATUS register (0x0B) */
-enum mfrc630comstat {
-  MFRC630_COMSTAT_IDLE = 0b000,         /**< IDLE */
-  MFRC630_COMSTAT_TXWAIT = 0b001,       /**< TX Wait */
-  MFRC630_COMSTAT_TRANSMITTING = 0b011, /**< Transmitting */
-  MFRC630_COMSTAT_RXWAIT = 0b101,       /**< RX Wait */
-  MFRC630_COMSTAT_WAITFORDATA = 0b110,  /**< Waiting for DATA */
-  MFRC630_COMSTAT_RECEIVING = 0b111     /**< Receiving */
-};
+typedef enum  {
+  MFRC630_COMSTAT_IDLE = 0,         /**< IDLE */
+  MFRC630_COMSTAT_TXWAIT = 1,       /**< TX Wait */
+  MFRC630_COMSTAT_TRANSMITTING = 3, /**< Transmitting */
+  MFRC630_COMSTAT_RXWAIT = 5,       /**< RX Wait */
+  MFRC630_COMSTAT_WAITFORDATA = 6,  /**< Waiting for DATA */
+  MFRC630_COMSTAT_RECEIVING = 7     /**< Receiving */
+} mfrc630comstat;
 
 /*! Radio config modes */
-enum mfrc630radiocfg {
+typedef enum  {
   MFRC630_RADIOCFG_ISO1443A_106 = 1, /**< ISO1443A 106 Mode */
   MFRC630_LAST
-};
+} mfrc630radiocfg;
 
 /*! MFRC360 errors */
-enum mfrc630errors {
+typedef enum  {
   MFRC630_ERROR_EEPROM = (1 << 7),   /**< EEPROM error. */
   MFRC630_ERROR_FIFOWR = (1 << 6),   /**< FIFO write error. */
   MFRC630_ERROR_FIFOOVL = (1 << 5),  /**< FIFO already full! */
@@ -173,10 +173,10 @@ enum mfrc630errors {
   MFRC630_ERROR_COLLDET = (1 << 2),  /**< Collision detection, see RxColl. */
   MFRC630_ERROR_PROT = (1 << 1),     /**< Protocol error. */
   MFRC630_ERROR_INTEG = (1 << 0)     /**< Data integrity error. */
-};
+} mfrc630errors;
 
 /*! MFRC630 interrupt requests 0 */
-enum mfrc630irq0 {
+typedef enum  {
   MFRC630IRQ0_SET = (1 << 7),        /**< Sets/Clears interrupt. */
   MFRC630IRQ0_HIALERTIRQ = (1 << 6), /**< FIFO has reached top level. */
   MFRC630IRQ0_LOALERTIRQ = (1 << 5), /**< FIFO has reached bottom level. */
@@ -186,10 +186,10 @@ enum mfrc630irq0 {
   MFRC630IRQ0_ERRIRQ =
       (1 << 1), /**< FifoWrErr, FiFoOvl, ProtErr, NoDataErr, IntegErr. */
   MFRC630IRQ0_RXSOF = (1 << 0) /**< RX start of frame detected. */
-};
+} mfrc630irq0;
 
 /*! MFRC630 interrupt requests 1 */
-enum mfrc630irq1 {
+typedef enum  {
   MFRC630IRQ1_SET = (1 << 7),       /**< Sets/Clears interrupt. */
   MFRC630IRQ1_GLOBALIRQ = (1 << 6), /**< Set if an enabled IRQ occured */
   MFRC630IRQ1_LPCDIRQ = (1 << 5),   /**< Card detected in low power mode */
@@ -198,11 +198,11 @@ enum mfrc630irq1 {
   MFRC630IRQ1_TIMER2IRQ = (1 << 2), /**< Timer 2 underflow */
   MFRC630IRQ1_TIMER1IRQ = (1 << 1), /**< Timer 1 underflow */
   MFRC630IRQ1_TIMER0IRQ = (1 << 0), /**< Timer 0 underflow */
-};
+} mfrc630irq1;
 
 /*! MFRC630 crypto engine status */
-enum mfrc630status {
+typedef enum  {
   MFRC630STATUS_CRYPTO1ON = (1 << 5) /**< Mifare Classic Crypto engine on */
-};
+} mfrc630status;
 
 #endif

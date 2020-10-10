@@ -1216,7 +1216,7 @@
             <group>
                 <name>nfc</name>
                 <file>
-                    <name>$PROJ_DIR$\..\Core\Adafruit_MFRC630\Adafruit_MFRC630.cpp</name>
+                    <name>$PROJ_DIR$\..\Core\Adafruit_MFRC630\Adafruit_MFRC630.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Core\Adafruit_MFRC630\Adafruit_MFRC630_consts.c</name>
