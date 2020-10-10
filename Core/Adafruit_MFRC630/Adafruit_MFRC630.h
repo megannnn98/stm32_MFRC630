@@ -1,8 +1,8 @@
 /*!
  * @file MFRC630.h
  */
-#ifndef __mfrc630_H__
-#define __mfrc630_H__
+#ifndef __MFRC630_H__
+#define __MFRC630_H__
 
 #include "Adafruit_MFRC630_consts.h"
 #include "Adafruit_MFRC630_regs.h"
@@ -15,23 +15,23 @@
 /*!
  * @brief MFRC630 I2C Address
  */
-#define mfrc630_I2C_ADDR (0x28)
+#define MFRC630_I2C_ADDR (0x28)
 
 /* Debug output level */
 /*
  * NOTE: Setting this macro above RELEASE may require more SRAM than small
  *       MCUs like the Atmel 32u4 can provide!
  */
-#define mfrc630_VERBOSITY_RELEASE (0) //!< No debug output
-#define mfrc630_VERBOSITY_DEBUG (1)   //!< Debug message output
-#define mfrc630_VERBOSITY_TRACE (2)   //!< Full packet trace dumps
-#define mfrc630_VERBOSITY                                                      \
-  (mfrc630_VERBOSITY_RELEASE) //!< Sets verbosity variable
+#define MFRC630_VERBOSITY_RELEASE (0) //!< No debug output
+#define MFRC630_VERBOSITY_DEBUG (1)   //!< Debug message output
+#define MFRC630_VERBOSITY_TRACE (2)   //!< Full packet trace dumps
+#define MFRC630_VERBOSITY                                                      \
+  (MFRC630_VERBOSITY_RELEASE) //!< Sets verbosity variable
 
-#define mfrc630_ALWAYS_DISP_ERRORS (1) //!< Sets error output
+#define MFRC630_ALWAYS_DISP_ERRORS (1) //!< Sets error output
 
 /* Macro for debug output */
-#if MFRC630_VERBOSITY >= mfrc630_VERBOSITY_DEBUG
+#if MFRC630_VERBOSITY >= MFRC630_VERBOSITY_DEBUG
 #define DEBUG_PRINT(...) PRINT(__VA_ARGS__)
 #define DEBUG_PRINTLN(...) PRINTln(__VA_ARGS__)
 #define DEBUG_TIMESTAMP()                                                      \
@@ -43,7 +43,7 @@
 #endif
 
 /* Macro for trace output */
-#if MFRC630_VERBOSITY >= mfrc630_VERBOSITY_TRACE
+#if MFRC630_VERBOSITY >= MFRC630_VERBOSITY_TRACE
 #define TRACE_PRINT(...) PRINT(__VA_ARGS__)
 #define TRACE_PRINTLN(...) PRINTln(__VA_ARGS__)
 #define TRACE_TIMESTAMP()                                                      \
@@ -69,7 +69,7 @@
 #endif
 
 /**
- * Driver for the Adafruit MFRC630 RFID front-end.
+ * Driver for the Adafruit mfrc630 RFID front-end.
  */
   /**
    * HW SPI bus constructor
@@ -81,7 +81,7 @@
    * @note This instance of the constructor requires the 'transport'
    *       parameter to distinguish is from the default I2C version.
    */
-  void MFRC630(void);
+  void mfrc630(void);
 
   /**
    * Initialises the IC and performs some simple system checks.
