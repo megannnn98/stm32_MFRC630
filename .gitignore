@@ -1,0 +1,8 @@
+*.xcl
+*.o
+*.pbi
+/EWARM/settings/*.wsdt
+Obj
+Exe
+/EWARM/settings/*.dnx
+/EWARM/*.dep
