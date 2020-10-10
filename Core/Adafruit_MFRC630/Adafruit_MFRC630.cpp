@@ -28,10 +28,6 @@
 #include "Adafruit_MFRC630.h"
 #include "main.h"
 
-#define LOW  0
-#define HIGH 1
-
-#define RFID_SPI SPI1 
 
 void digitalWrite(uint8_t v8)
 {
@@ -46,8 +42,6 @@ uint8_t spi_exchange(uint8_t v8)
     return LL_SPI_ReceiveData8(RFID_SPI);
 }
 
-
-#define delay(ms) HAL_Delay(ms)
 /***************************************************************************
  PRIVATE FUNCTIONS
  ***************************************************************************/

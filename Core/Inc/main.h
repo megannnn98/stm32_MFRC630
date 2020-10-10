@@ -75,6 +75,12 @@ void Error_Handler(void);
 #define RFID_PDWN_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */
 
+#define LOW  0
+#define HIGH 1
+
+#define RFID_SPI SPI1 
+
+#define delay(ms) HAL_Delay(ms)
 
 #define PRINT(...) 
 
